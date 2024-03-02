@@ -13,12 +13,12 @@ public class Test_reports_data {
     private String tr_time;
     private String t_report_data;
     private String t_report_status;
-    private char is_cancelled;
+    private String is_cancelled;
     private int technician_id;
     private int appointment_id;
     private int test_id;
 
-    public Test_reports_data(String tr_time, String t_report_data, String t_report_status, char is_cancelled, int technician_id, int appointment_id, int test_id) {
+    public Test_reports_data(String tr_time, String t_report_data, String t_report_status, String is_cancelled, int technician_id, int appointment_id, int test_id) {
         this.tr_time = tr_time;
         this.t_report_data = t_report_data;
         this.t_report_status = t_report_status;
@@ -28,7 +28,7 @@ public class Test_reports_data {
         this.test_id = test_id;
     }
 
-    public Test_reports_data(int test_repo_id, String tr_time, String t_report_data, String t_report_status, char is_cancelled, int technician_id, int appointment_id, int test_id) {
+    public Test_reports_data(int test_repo_id, String tr_time, String t_report_data, String t_report_status, String is_cancelled, int technician_id, int appointment_id, int test_id) {
         this.test_repo_id = test_repo_id;
         this.tr_time = tr_time;
         this.t_report_data = t_report_data;
@@ -71,11 +71,11 @@ public class Test_reports_data {
         this.t_report_status = t_report_status;
     }
 
-    public char getIs_cancelled() {
+    public String getIs_cancelled() {
         return is_cancelled;
     }
 
-    public void setIs_cancelled(char is_cancelled) {
+    public void setIs_cancelled(String is_cancelled) {
         this.is_cancelled = is_cancelled;
     }
 

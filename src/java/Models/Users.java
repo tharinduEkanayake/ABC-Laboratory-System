@@ -16,9 +16,9 @@ public class Users {
     private String u_password;
     private String u_privileges;
     private String u_registered_date;
-    private char is_deleted;
+    private String is_deleted;
 
-    public Users(String u_first_name, String u_last_name, String u_address, String u_gender, String u_email, String u_phone, String u_password, String u_privileges, String u_registered_date, char is_deleted) {
+    public Users(String u_first_name, String u_last_name, String u_address, String u_gender, String u_email, String u_phone, String u_password, String u_privileges, String u_registered_date, String is_deleted) {
         this.u_first_name = u_first_name;
         this.u_last_name = u_last_name;
         this.u_address = u_address;
@@ -31,7 +31,7 @@ public class Users {
         this.is_deleted = is_deleted;
     }
 
-    public Users(int u_id, String u_first_name, String u_last_name, String u_address, String u_gender, String u_email, String u_phone, String u_password, String u_privileges, String u_registered_date, char is_deleted) {
+    public Users(int u_id, String u_first_name, String u_last_name, String u_address, String u_gender, String u_email, String u_phone, String u_password, String u_privileges, String u_registered_date, String is_deleted) {
         this.u_id = u_id;
         this.u_first_name = u_first_name;
         this.u_last_name = u_last_name;
@@ -125,11 +125,11 @@ public class Users {
         this.u_registered_date = u_registered_date;
     }
 
-    public char getIs_deleted() {
+    public String getIs_deleted() {
         return is_deleted;
     }
 
-    public void setIs_deleted(char is_deleted) {
+    public void setIs_deleted(String is_deleted) {
         this.is_deleted = is_deleted;
     }
 }

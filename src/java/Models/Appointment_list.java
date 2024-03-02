@@ -12,11 +12,11 @@ public class Appointment_list {
     private int a_id;
     private String a_date;
     private String register_date;
-    private char is_cencelled;
+    private String is_cencelled;
     private String a_status;
     private int patient_id;
 
-    public Appointment_list(String a_date, String register_date, char is_cencelled, String a_status, int patient_id) {
+    public Appointment_list(String a_date, String register_date, String is_cencelled, String a_status, int patient_id) {
         this.a_date = a_date;
         this.register_date = register_date;
         this.is_cencelled = is_cencelled;
@@ -24,7 +24,7 @@ public class Appointment_list {
         this.patient_id = patient_id;
     }
 
-    public Appointment_list(int a_id, String a_date, String register_date, char is_cencelled, String a_status, int patient_id) {
+    public Appointment_list(int a_id, String a_date, String register_date, String is_cencelled, String a_status, int patient_id) {
         this.a_id = a_id;
         this.a_date = a_date;
         this.register_date = register_date;
@@ -57,11 +57,11 @@ public class Appointment_list {
         this.register_date = register_date;
     }
 
-    public char getIs_cencelled() {
+    public String getIs_cencelled() {
         return is_cencelled;
     }
 
-    public void setIs_cencelled(char is_cencelled) {
+    public void setIs_cencelled(String is_cencelled) {
         this.is_cencelled = is_cencelled;
     }
 

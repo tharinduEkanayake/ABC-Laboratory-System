@@ -13,9 +13,9 @@ public class Test {
     private String t_name;
     private double charges;
     private String references_level;
-    private char is_deleted;
+    private String is_deleted;
 
-    public Test(int t_id, String t_name, double charges, String references_level, char is_deleted) {
+    public Test(int t_id, String t_name, double charges, String references_level, String is_deleted) {
         this.t_id = t_id;
         this.t_name = t_name;
         this.charges = charges;
@@ -23,13 +23,6 @@ public class Test {
         this.is_deleted = is_deleted;
     }
 
-    public Test(String t_name, double charges, String references_level, char is_deleted) {
-        this.t_name = t_name;
-        this.charges = charges;
-        this.references_level = references_level;
-        this.is_deleted = is_deleted;
-    }
-    
     public int getT_id() {
         return t_id;
     }
@@ -62,14 +55,13 @@ public class Test {
         this.references_level = references_level;
     }
 
-    public char getIs_deleted() {
+    public String getIs_deleted() {
         return is_deleted;
     }
 
-    public void setIs_deleted(char is_deleted) {
+    public void setIs_deleted(String is_deleted) {
         this.is_deleted = is_deleted;
     }
-
-    
+  
     
 }
