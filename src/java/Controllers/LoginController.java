@@ -24,7 +24,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
         dispatcher.forward(request, response);
     }
@@ -43,6 +43,12 @@ public class LoginController extends HttpServlet {
             String privi = loginUserDetails.getPrivilages();
             int logID = loginUserDetails.getId();
 
+//            Session part
+            HttpSession session = request.getSession();
+            session.setAttribute("privilages", privi);
+            session.setAttribute("logingID", logID);
+            
+
 //            System.out.println("ID is : " + loginUserDetails.getId() + "  privilages is " + loginUserDetails.getPrivilages());
             switch (privi) {
                 case "patient":
@@ -50,7 +56,7 @@ public class LoginController extends HttpServlet {
                     break;
 
                 case "ADMIN":
-                    response.sendRedirect(request.getContextPath() + "/Admin-Home?id=" + logID + "&type=" + privi);
+                    response.sendRedirect(request.getContextPath() + "/Admin-Home");
                     break;
 
                 case "TECH":

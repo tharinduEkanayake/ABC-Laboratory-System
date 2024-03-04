@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "TestDetailsController", urlPatterns = {"/Test-Details"})
 public class TestDetailsController extends HttpServlet {
@@ -16,29 +17,66 @@ public class TestDetailsController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String command = request.getParameter("command");
+//        Check Session
+        HttpSession session = request.getSession();
+        String privi = (String) session.getAttribute("privilages");
 
-        switch (command) {
-            case "LOAD":
-                var testsDetails = DBUtil.getTestPackages();
-                request.setAttribute("testDetailsList",testsDetails);
-                break;
-            case "UPDATE":
-                System.out.println("Update");
-                break;
-            case "DEL":
-                System.out.println("Delete");
-                break;
+        if (privi == null) {
+            
+            response.sendRedirect(request.getContextPath() + "/Log-Out");
+            
+        } else {
+            String command = request.getParameter("command");
+
+            switch (command) {
+                case "LOAD":
+                    loadTestDetails(request, response);
+                    break;
+                case "UPDATE":
+                    System.out.println("Update");
+                    break;
+                case "DEL":
+                    System.out.println("Delete");
+                    break;
+            }
         }
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("testPackages.jsp");
-        dispatcher.forward(request, response);
+        
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String command = request.getParameter("command");
+
+        switch (command) {
+            case "ADD":
+                addTestDetails(request,response);
+                break;
+        }
+    }
+
+//    Custome created methods
+    protected void addTestDetails(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        int t_id = Integer.parseInt(request.getParameter("t_id"));
+        String t_name = request.getParameter("t_name");
+        double charges = Double.parseDouble(request.getParameter("charges"));
+        String references_level = request.getParameter("references_level");
+        
+        DBUtil.inserTestDetails(t_id,t_name,charges,references_level);
+        
+        loadTestDetails(request, response);        
+    }
+
+    protected void loadTestDetails(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        var testsDetails = DBUtil.getTestPackages();
+        request.setAttribute("testDetailsList", testsDetails);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("testPackages.jsp");
+        dispatcher.forward(request, response);
     }
 
 }

@@ -14,28 +14,26 @@ import javax.servlet.http.HttpSession;
  *
  * @author Tharindu Konesh
  */
-@WebServlet(name = "UpdateTestPackagesController", urlPatterns = {"/Update-Test-Packages"})
-public class UpdateTestPackagesController extends HttpServlet {
+@WebServlet(name = "AddNewAppointments", urlPatterns = {"/Insert-Appointment"})
+public class AddNewAppointments extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+//        Check Session
         HttpSession session = request.getSession();
         String privi = (String) session.getAttribute("privilages");
 
         if (privi == null) {
+
             response.sendRedirect(request.getContextPath() + "/Log-Out");
-
-        } else {
-
-            int u_id = Integer.parseInt(request.getParameter("id"));
-            var testList = DBUtil.getOneTest(u_id);
             
-            request.setAttribute("testList", testList);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("update-test-packages.jsp");
+        } else {
+            
+            RequestDispatcher dispatcher = request.getRequestDispatcher("add-new-appointment.jsp");
             dispatcher.forward(request, response);
-
+            
         }
 
     }

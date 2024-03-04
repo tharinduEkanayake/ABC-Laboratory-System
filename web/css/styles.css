@@ -1,0 +1,63 @@
+
+:root {
+    --dark: #122040; /*#0A1528; #22375C; */
+    --noramlDark: #14418f;
+    --shapeDark: #84adf5;
+    --darkLight: #bdd5ff;
+    --light: #dbe8ff;
+}
+
+body {
+    background-color: var(--light);
+}
+
+/* heading line css code */
+.main-headding {
+    background-color: var(--dark);
+    color: var(--shapeDark);
+}
+
+.main-headding .right {
+    text-align: right;
+}
+
+.footer {
+    background-color: var(--dark);
+    color: var(--darkLight);
+}
+
+.footer p {
+    margin: 0;
+}
+
+/* under the heading line and sub heading css codes */
+.subHeaddignContainer {
+    background-color: var(--dark);
+    color: var(--shapeDark);
+}
+
+.subhead h5 {
+    margin: 0;
+    padding: 0.25rem 0.7rem 0.2rem 0.5rem;
+}
+
+.subhead h5.online {
+    background-color: var(--light);
+}
+
+hr {
+    margin: 0.2rem 0;
+}
+
+.btn-insert{
+    text-align: right;
+}
+
+.btn-insert button{
+    margin: 1.5rem 0;
+}
+
+/*form documents css*/
+form{
+    margin: 1.5rem 0;
+}

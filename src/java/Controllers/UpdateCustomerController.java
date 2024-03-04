@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -20,21 +21,35 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "UpdateCustomerController", urlPatterns = {"/Update-Customer"})
 public class UpdateCustomerController extends HttpServlet {
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        RequestDispatcher dispatcher = request.getRequestDispatcher("update-customer-form.jsp");
-        dispatcher.forward(request, response);
+
+//        session check part
+        HttpSession session = request.getSession();
+        String privi = (String) session.getAttribute("privilages");
+
+        if (privi == null) {
+
+            response.sendRedirect(request.getContextPath() + "/Log-Out");
+
+        } else {
+            
+            int pID = Integer.parseInt(request.getParameter("id"));
+            var patientDetails = DBUtil.getOneCustomer(pID);
+            
+            request.setAttribute("patientDetails", patientDetails);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("update-customer-form.jsp");
+            dispatcher.forward(request, response);
+
+        }
+
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-    }
 
+    }
 
 }
