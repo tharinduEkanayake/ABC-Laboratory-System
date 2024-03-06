@@ -62,7 +62,7 @@
 
 
         <div class="container">
-            <form action="" method="post" class="needs-validation">
+            <form action="Customer-Details" method="post" class="needs-validation">
                 <div class="mb-3 row">
                     <label for="inputID" class="col-1 col-form-label">Patient ID</label>
                     <div class="col-sm-3">
@@ -132,8 +132,6 @@
                         </div>
                     </div>
                 </div>
-
-
 
                 <input type="hidden" value="UPDATE" name="command" />
 

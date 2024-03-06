@@ -5,6 +5,17 @@
 --%>
 <%@ page session="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+
+<!--set the current Date-->
+<%
+  Date currentDate = new Date();
+  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+  String formattedDate = dateFormat.format(currentDate);
+%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -142,7 +153,7 @@
                         <div class="row">
                             <label for="inputRegisterDate" class="col-3 col-form-label">Register Date</label>
                             <div class="col-sm-9">
-                                <input type="date" class="form-control" id="inputRegisterDate" value="2024-02-03" name="u_registered_date" required readonly />
+                                <input type="date" class="form-control" id="inputRegisterDate" value="<%= formattedDate %>" name="u_registered_date" required readonly />
                             </div>
                         </div>
                     </div>

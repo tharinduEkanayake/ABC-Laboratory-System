@@ -61,7 +61,7 @@
 
 
         <div class="container">
-            <form action="" method="post" class="needs-validation">
+            <form action="User-Details" method="post" class="needs-validation">
                 <div class="mb-3 row">
                     <label for="inputID" class="col-1 col-form-label">User ID</label>
                     <div class="col-sm-3">
@@ -149,7 +149,7 @@
                     </div>
                 </div>
 
-                <input type="hidden" value="ADD" name="command" />
+                <input type="hidden" value="UPDATE" name="command" />
 
                 <div class="row justify-content-end">
                     <div class="col-3">

@@ -36,7 +36,7 @@ public class TestDetailsController extends HttpServlet {
                     System.out.println("Update");
                     break;
                 case "DEL":
-                    System.out.println("Delete");
+                    deleteTesPackage(request,response);
                     break;
             }
         }
@@ -53,7 +53,38 @@ public class TestDetailsController extends HttpServlet {
             case "ADD":
                 addTestDetails(request,response);
                 break;
+                
+            case "UPDATE":
+                updateTestDetails(request,response);
+                break;
+                
         }
+    }
+    
+//    Delete Test package
+    protected void deleteTesPackage(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        int t_id = Integer.parseInt(request.getParameter("id"));
+        
+        DBUtil.deleteTets(t_id);
+        
+        loadTestDetails(request, response); 
+    }
+    
+    
+//    update test packages details
+    protected void updateTestDetails(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        int t_id = Integer.parseInt(request.getParameter("t_id"));
+        double charges = Double.parseDouble(request.getParameter("charges"));
+        String references_level = request.getParameter("references_level");
+        
+        DBUtil.updateTestDetails(t_id,charges,references_level);
+        
+        loadTestDetails(request, response); 
+        
     }
 
 //    Custome created methods

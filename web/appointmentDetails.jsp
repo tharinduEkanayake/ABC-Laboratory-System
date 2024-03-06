@@ -26,7 +26,7 @@
                 <div class="right col-6 align-self-center">
                     <a href="/ABCLaboratorySystem/Log-Out"><button class="btn btn-danger">Log Out</button></a>
                     <span class="badge rounded-pill bg-dark">
-                        
+
                         <c:set var="typeaAD" value="ADMIN" />
                         <c:if test="${sessionScope.privilages eq typeaAD}">
                             Admin Login
@@ -36,7 +36,7 @@
                         <c:if test="${sessionScope.privilages eq typeaFD}">
                             Front Desk Login
                         </c:if>
-                            
+
                     </span>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                     <a href="/ABCLaboratorySystem/Customer-Details?command=LOAD"><h5 class="d-inline-block rounded-top ">Customer</h5></a>
                 </div>
 
-                
+
                 <c:if test="${sessionScope.privilages eq typeaAD}">
                     <div class="d-inline subhead">
                         <a href="/ABCLaboratorySystem/User-Details?command=LOAD"><h5 class="d-inline-block rounded-top">Users</h5></a>
@@ -101,23 +101,28 @@
                 </thead>
                 <tbody>
                     <c:forEach var="items" items="${Appointments}" >
-                        <tr>
-                            <c:if test="${items.is_cencelled eq 'F'}">
+                        <c:if test="${items.is_cencelled eq 'F'}">
+                            <tr>
                                 <td>${items.a_id}</td>
                                 <td>${items.a_date}</td>
                                 <td>${items.register_date}</td>
                                 <td>${items.a_status}</td>
                                 <td>${items.patient_id}</td>
 
-                                <td><a href="Appointment-List?command=UPDATE&id=${items.a_id}"><button>View Test</button></a></td>
+                                <td><button class="btnTestDetailsView" id="${items.a_id}">View Test</button></td>
                                 <c:if test="${sessionScope.privilages eq typeaAD}">
-                                    <td><a href="Appointment-List?command=DEL&id=${items.a_id}"><button>Delete</button></a></td>
+                                    <td><button onclick="confirmAction(${items.a_id})">Delete</button></td>
                                 </c:if>
-                            </c:if>
-                        </tr>
+                            </tr>
+                        </c:if>
                     </c:forEach>
                 </tbody>
             </table>
+        </div>
+
+        <!--Test details Modal--> 
+        <div id ="model_container">
+
         </div>
 
 
@@ -131,7 +136,45 @@
         <script src="data_tables/datatables.min.js" type="text/javascript"></script>
 
         <script>
-            new DataTable('#AppointmentData');
+                                        new DataTable('#AppointmentData');
+        </script>
+
+        <script>
+            function confirmAction(id) {
+                var result = confirm("Are you sure you want to perform this action?");
+                if (result) {
+
+                    window.location.href = "Appointment-List?command=DEL&id=" + id;
+
+                }
+            }
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $(".btnTestDetailsView").click(function () {
+                    let a_id = $(this).attr('id');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'Appointment-List',
+                        data: {
+                            command: "TEST_LIST",
+                            ap_id: a_id
+
+                        },
+                        success: function (response) {
+                            $("#model_container").html(response);
+                            $("#staticBackdrop").modal('show');
+
+                        },
+                        error: function (xhr, status, error) {
+                            // Handle error response
+                        }
+                    });
+
+                });
+            })
         </script>
     </body>
 </html>

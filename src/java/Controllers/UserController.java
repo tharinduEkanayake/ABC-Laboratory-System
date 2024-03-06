@@ -33,6 +33,9 @@ public class UserController extends HttpServlet {
                 case "LOAD":
                     loadUserData(request, response);
                     break;
+                case "DEL":
+                    deleteUser(request,response);
+                    break;
             }
             
         } else {
@@ -53,8 +56,41 @@ public class UserController extends HttpServlet {
             case "ADD":
                 insertUserData(request, response);
                 break;
+                
+            case  "UPDATE":
+                updateUserDetails(request,response);
+                break;
         }
 
+    }
+    
+//    Delete the Users
+    protected void deleteUser(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException{
+        
+        int u_id = Integer.parseInt(request.getParameter("id"));
+        
+        DBUtil.deleteUser(u_id);
+        
+        loadUserData(request, response);
+    }
+    
+//    Update User details
+    protected void updateUserDetails(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException{
+        
+        int u_id = Integer.parseInt(request.getParameter("u_id"));
+        String u_first_name = request.getParameter("u_first_name");
+        String u_last_name = request.getParameter("u_last_name");
+        String u_address = request.getParameter("u_address");        
+        String u_phone = request.getParameter("u_phone");
+        
+
+//        System.out.println(u_id + " " + u_first_name + " " + u_last_name + " " + u_address + " " + u_gender + " " + u_email + " " + u_phone + " " + u_password + " " + u_privileges + " " + u_registered_date);
+        DBUtil.insertUserDetails(u_id, u_first_name, u_last_name, u_address, u_phone);
+
+        loadUserData(request, response);
+        
     }
 
 //    Custome created method list

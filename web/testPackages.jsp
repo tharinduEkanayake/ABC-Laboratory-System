@@ -114,8 +114,8 @@
                                 <td>${item.references_level}</td>
 
                                 <c:if test="${sessionScope.privilages eq typeaAD}">
-                                    <td><a href="Update-Test-Packages?command=UPDATE&id=${item.t_id}"><button>Update</button></td>
-                                    <td><a href="User-Details?command=DEL&id=${item.t_id}"><button>Delete</button></a></td>
+                                    <td><a href="Update-Test-Packages?id=${item.t_id}"><button>Update</button></td>
+                                    <td><button onclick="confirmAction(${item.t_id})">Delete</button></td>
                                 </c:if>
                             </tr>
                         </c:if>
@@ -136,6 +136,17 @@
 
         <script>
             new DataTable('#testData');
+        </script>
+        
+        <script>
+            function confirmAction(id) {
+                var result = confirm("Are you sure you want to perform this action?");
+                if (result) {
+                    
+                    window.location.href = "Test-Details?command=DEL&id="+ id;
+                    
+                } 
+            }
         </script>
     </body>
 </html>

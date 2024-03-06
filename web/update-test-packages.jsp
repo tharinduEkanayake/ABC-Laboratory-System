@@ -61,7 +61,7 @@
 
 
         <div class="container">
-            <form action="" method="post" class="needs-validation">
+            <form action="Test-Details" method="post" class="needs-validation">
                 <div class="mb-3 row">
                     <label for="inputID" class="col-2 col-form-label">Test ID</label>
                     <div class="col-sm-3">
@@ -95,7 +95,7 @@
                     </div>
                 </div>
 
-                <input type="hidden" value="ADD" name="command" />
+                <input type="hidden" value="UPDATE" name="command" />
 
                 <div class="row justify-content-end">
                     <div class="col-3">
@@ -108,7 +108,7 @@
 
 
 
-        <!--Footer css taglist-->
+        <!--Footer css tag list-->
         <div class="footer container-fluid text-center py-4">
             <p>All right received</p>
         </div>

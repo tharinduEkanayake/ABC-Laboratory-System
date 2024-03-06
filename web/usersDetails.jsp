@@ -70,7 +70,7 @@
         <table id="usersData" class="display" style="width:100%">
             <thead>
                 <tr>
-                    <td>User ID</td>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Address</th>
                     <th>Gender</th>
@@ -95,8 +95,8 @@
                             <td>${item.u_privileges}</td>
                             <td>${item.u_registered_date}</td>
 
-                            <td><a href="Update-Users?command=UPDATE&id=${item.u_id}"><button>Update</button></td>
-                            <td><a href="User-Details?command=DEL&id=${item.u_id}"><button>Delete</button></a></td>
+                            <td><a href="Update-Users?id=${item.u_id}"><button>Update</button></a></td>
+                            <td><button onclick="confirmAction(${item.u_id})">Delete</button></td>
                         </tr>
                     </c:if>
 
@@ -118,6 +118,17 @@
 
         <script>
             new DataTable('#usersData');
+        </script>
+        
+        <script>
+            function confirmAction(id) {
+                var result = confirm("Are you sure you want to perform this action?");
+                if (result) {
+                    
+                    window.location.href = "User-Details?command=DEL&id="+ id;
+                    
+                } 
+            }
         </script>
     </body>
 </html>

@@ -100,9 +100,6 @@
                         <!--<th>Register Date</th>-->
                         <!--<th>Password Changed Date</th>-->
                         <th></th>
-                            <c:if test="${sessionScope.privilages eq typeaAD}">
-                            <th></th>
-                            </c:if>
 
                     </tr>
                 </thead>
@@ -118,11 +115,9 @@
                             <td>${item.p_email}</td>
                             <td>${item.p_phone}</td>
 
-                            <td><a href="Update-Customer?command=UPDATE&id=${item.p_id}"><button>Update</button></a></td>
+                            <td><a href="Update-Customer?id=${item.p_id}"><button>Update</button></a></td>
 
-                            <c:if test="${sessionScope.privilages eq typeaAD}">
-                                <td><a href="Customer-Details?command=DEL&id=${item.p_id}"><button>Delete</button></a></td>
-                            </c:if>
+                            
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -144,6 +139,17 @@
 
         <script>
             new DataTable('#testReports');
+        </script>
+        
+        <script>
+//            function confirmAction(id) {
+//                var result = confirm("Are you sure you want to perform this action?");
+//                if (result) {
+//                    
+//                    window.location.href = "Customer-Details?command=DEL&id="+ id;
+//                    
+//                } 
+//            }
         </script>
     </body>
 </html>

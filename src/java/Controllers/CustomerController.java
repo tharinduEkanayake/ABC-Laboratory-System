@@ -26,26 +26,24 @@ public class CustomerController extends HttpServlet {
         String privi = (String) session.getAttribute("privilages");
 
         if (privi == null) {
-            
+
             response.sendRedirect(request.getContextPath() + "/Log-Out");
-            
+
         } else {
-            
+
             String command = request.getParameter("command");
 
             switch (command) {
                 case "LOAD":
                     loadCustomerData(request, response);
                     break;
-                case "UPDATE":
-                    System.out.println("Update");
-                    break;
-                case "DEL":
-                    System.out.println("Delete");
-                    break;
+                    
+//                case "DEL":
+//                    deleteCustomer(request,response);                    
+//                    break;
             }
         }
-       
+
     }
 
     @Override
@@ -58,9 +56,37 @@ public class CustomerController extends HttpServlet {
             case "ADD":
                 insertCustomerData(request, response);
                 break;
+            case "UPDATE":
+                updateCustomerData(request, response);
+                break;
         }
 
 //        System.out.println(command);
+    }
+    
+    
+    
+//    Delete the user
+//    void deleteCustomer(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//        
+//        int p_id = Integer.parseInt(request.getParameter("id"));
+//        
+//        
+//    }
+
+//    Update Customer Data
+    void updateCustomerData(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int p_id = Integer.parseInt(request.getParameter("p_id"));
+        String p_name = request.getParameter("p_name");
+        String p_address = request.getParameter("p_address");
+        String p_phone = request.getParameter("p_phone");
+
+        DBUtil.updateCustomer(p_id, p_name, p_address, p_phone);
+        
+        loadCustomerData(request, response);
     }
 
 //  Insert the customer data to the table

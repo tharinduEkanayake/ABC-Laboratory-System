@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.AppointmentSelectedTest;
 import Models.Appointment_list;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -32,22 +33,210 @@ public class DBUtil {
         }
         return connection;
     }
-    
-    public static Users getOneUser(int u_id){
-        Users users_list = null;
-        
+
+    public static void deleteAppointment(int a_id) {
+         
         var connection = getConnection();
-        try{
-            
+        try {
+            var callableStatement = connection.prepareCall("{CALL delete_appointment(?)}");
+
+            callableStatement.setInt(1, a_id);
+
+            callableStatement.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println("update User error : " + e);
+        }
+        
+    }
+
+    public static List<AppointmentSelectedTest> getAppointmentSelectedTestDetails(int a_id) {
+        ArrayList<AppointmentSelectedTest> testList = new ArrayList<>();
+
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL getSelectedAppointmentTestList(?)}");
+
+            callableStatement.setInt(1, a_id);
+
+            var resultSet = callableStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                int test_repo_id = resultSet.getInt("test_repo_id");
+                String t_name = resultSet.getString("t_name");
+                String tr_time = resultSet.getString("tr_time");
+                String t_report_data = resultSet.getString("t_report_data");
+                int technician_id = resultSet.getInt("technician_id");
+
+                var test = new AppointmentSelectedTest(test_repo_id, t_name, tr_time, t_report_data, technician_id);
+                testList.add(test);
+            }
+        } catch (Exception e) {
+            System.out.println("getAppointmentsTestList Error : " + e);
+        }
+
+        return testList;
+    }
+
+    public static void insertTestReportByFrontdesk(int aID, int tID) {
+        int testreportid = getTestReportMax();
+        testreportid += 1;
+
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL insert_report_data_by_frontdesk(?,?,?)}");
+
+            callableStatement.setInt(1, testreportid);
+            callableStatement.setInt(2, aID);
+            callableStatement.setInt(3, tID);
+
+            callableStatement.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println("update User error : " + e);
+        }
+
+    }
+
+    public static void insertAppointments(int a_id, String a_date, String a_time, String register_date, String a_status, int patient_id) {
+
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL insert_appointment(?,?,?,?,?,?)}");
+
+            callableStatement.setInt(1, a_id);
+            callableStatement.setString(2, a_date);
+            callableStatement.setString(3, a_time);
+            callableStatement.setString(4, register_date);
+            callableStatement.setString(5, a_status);
+            callableStatement.setInt(6, patient_id);
+
+            callableStatement.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println("update User error : " + e);
+        }
+
+    }
+
+    public static void deleteTets(int t_id) {
+
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL delete_test(?)}");
+
+            callableStatement.setInt(1, t_id);
+
+            callableStatement.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println("delete test error : " + e);
+        }
+
+    }
+
+    public static void deleteUser(int u_id) {
+
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL delete_user(?)}");
+
+            callableStatement.setInt(1, u_id);
+
+            callableStatement.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println("delete user error : " + e);
+        }
+
+    }
+
+//    public static void deleteCustomer(int p_id){
+//        
+//        var connection = getConnection();
+//        try{
+//            var callableStatement = connection.prepareCall("{CALL (?,?)}");
+//
+//            callableStatement.setInt(1, p_id);
+//            callableStatement.setDouble(2, 'F');
+//        
+//            callableStatement.executeQuery();
+//            
+//        }catch(Exception e){
+//            System.out.println("update Test error : " + e);
+//        }
+//        
+//    }
+    public static void updateTestDetails(int t_id, double charges, String references_level) {
+
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL update_test_details(?,?,?)}");
+
+            callableStatement.setInt(1, t_id);
+            callableStatement.setDouble(2, charges);
+            callableStatement.setString(3, references_level);
+
+            callableStatement.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println("update Test error : " + e);
+        }
+
+    }
+
+    public static void insertUserDetails(int u_id, String u_first_name, String u_last_name, String u_address, String u_phone) {
+
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL update_user_details(?,?,?,?,?)}");
+
+            callableStatement.setInt(1, u_id);
+            callableStatement.setString(2, u_first_name);
+            callableStatement.setString(3, u_last_name);
+            callableStatement.setString(4, u_address);
+            callableStatement.setString(5, u_phone);
+
+            callableStatement.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println("update User error : " + e);
+        }
+
+    }
+
+    public static void updateCustomer(int p_id, String p_name, String p_address, String p_phone) {
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL update_customere_details(?,?,?,?)}");
+
+            callableStatement.setInt(1, p_id);
+            callableStatement.setString(2, p_name);
+            callableStatement.setString(3, p_address);
+            callableStatement.setString(4, p_phone);
+
+            callableStatement.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println("update customer error : " + e);
+        }
+    }
+
+    public static Users getOneUser(int u_id) {
+        Users users_list = null;
+
+        var connection = getConnection();
+        try {
+
             var callableStatement = connection.prepareCall("{CALL get_one_user(?)}");
 
             callableStatement.setInt(1, u_id);
 
             var resultSet = callableStatement.executeQuery();
-                        
-            
+
             if (resultSet.next()) {
-                
+
                 String u_first_name = resultSet.getString("u_first_name");
                 String u_last_name = resultSet.getString("u_last_name");
                 String u_address = resultSet.getString("u_address");
@@ -58,101 +247,94 @@ public class DBUtil {
                 String u_privileges = resultSet.getString("u_privileges");
                 String u_registered_date = resultSet.getString("u_registered_date");
                 String is_deleted = resultSet.getString("is_deleted");
-                            
-                
-                var user = new Users( u_id,  u_first_name,  u_last_name,  u_address,  u_gender,  u_email,  u_phone, u_password,  u_privileges,  u_registered_date,  is_deleted);
+
+                var user = new Users(u_id, u_first_name, u_last_name, u_address, u_gender, u_email, u_phone, u_password, u_privileges, u_registered_date, is_deleted);
                 return user;
             }
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             System.out.println("one User error : " + e);
         }
-        
+
         return users_list;
     }
-    
-    
-    public static Test getOneTest(int t_id){
+
+    public static Test getOneTest(int t_id) {
         Test testList = null;
-        
+
         var connection = getConnection();
-        try{
+        try {
             var callableStatement = connection.prepareCall("{CALL get_one_test(?)}");
 
             callableStatement.setInt(1, t_id);
 
             var resultSet = callableStatement.executeQuery();
-                        
-            
+
             if (resultSet.next()) {
-                
+
                 String t_name = resultSet.getString("t_name");
                 double charges = resultSet.getDouble("charges");
                 String references_level = resultSet.getString("references_level");
                 String is_deleted = resultSet.getString("is_deleted");
-                
-                
-                var test = new Test( t_id,  t_name,  charges,  references_level,  is_deleted);
+
+                var test = new Test(t_id, t_name, charges, references_level, is_deleted);
                 return test;
             }
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             System.out.println("one test error : " + e);
         }
-        
+
         return testList;
     }
-    
-    public static Patient_list getOneCustomer(int p_id){
+
+    public static Patient_list getOneCustomer(int p_id) {
         Patient_list patientList = null;
-        
+
         var connection = getConnection();
-        try{
-            
+        try {
+
             var callableStatement = connection.prepareCall("{CALL get_one_patient(?)}");
 
             callableStatement.setInt(1, p_id);
 
             var resultSet = callableStatement.executeQuery();
-                        
-            
+
             if (resultSet.next()) {
-                
+
                 String p_name = resultSet.getString("p_name");
                 String p_gender = resultSet.getString("p_gender");
                 String p_address = resultSet.getString("p_address");
                 String p_birthday = resultSet.getString("p_birthday");
                 int p_age = resultSet.getInt("p_age");
                 String p_email = resultSet.getString("p_email");
-                
+
                 String p_phone = resultSet.getString("p_phone");
                 String p_password = resultSet.getString("p_password");
                 String p_privileges = resultSet.getString("p_privileges");
                 String p_register_date = resultSet.getString("p_register_date");
                 String password_changed = resultSet.getString("password_changed");
-                
-                
-                var patient = new Patient_list( p_id,  p_name,  p_gender,  p_address,  p_birthday,  p_age, p_email,  p_phone,  p_password,  p_privileges,  p_register_date, password_changed);
+
+                var patient = new Patient_list(p_id, p_name, p_gender, p_address, p_birthday, p_age, p_email, p_phone, p_password, p_privileges, p_register_date, password_changed);
                 return patient;
             }
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             System.out.println("One Patient Error : " + e);
         }
-        
+
         return patientList;
     }
-    
-    public static void inserTestDetails(int t_id,String t_name,double charges,String references_level){
+
+    public static void inserTestDetails(int t_id, String t_name, double charges, String references_level) {
         var connection = getConnection();
         try {
             var callableStatement = connection.prepareCall("{CALL insert_test(?,?,?,?)}");
-            
+
             callableStatement.setInt(1, t_id);
             callableStatement.setString(2, t_name);
             callableStatement.setDouble(3, charges);
             callableStatement.setString(4, references_level);
-
 
             callableStatement.executeQuery();
 
@@ -161,7 +343,7 @@ public class DBUtil {
         }
     }
 
-    public static void insertUserDetails(int u_id,String u_first_name,String u_last_name,String u_address,String u_gender,String u_email,String u_phone,String u_password,String u_privileges,String u_registered_date) {
+    public static void insertUserDetails(int u_id, String u_first_name, String u_last_name, String u_address, String u_gender, String u_email, String u_phone, String u_password, String u_privileges, String u_registered_date) {
         var connection = getConnection();
         try {
             var callableStatement = connection.prepareCall("{CALL insert_user(?,?,?,?,?,?,?,?,?,?)}");
@@ -441,7 +623,7 @@ public class DBUtil {
         return max;
 
     }
-    
+
     public static int getTestMax() {
         int max = 0;
         try (var connection = getConnection()) {
@@ -459,6 +641,42 @@ public class DBUtil {
 
         return max;
 
+    }
+
+    public static int getAppointmentMax() {
+        int max = 0;
+        try (var connection = getConnection()) {
+
+            var callableStatement = connection.prepareCall("{CALL max_appointment_list()}");
+            var resultSet = callableStatement.executeQuery();
+
+            if (resultSet.next()) {
+                max = resultSet.getInt("max_id");
+            }
+
+        } catch (Exception e) {
+            System.out.println("User Max Error " + e);
+        }
+
+        return max;
+    }
+
+    public static int getTestReportMax() {
+        int max = 0;
+        try (var connection = getConnection()) {
+
+            var callableStatement = connection.prepareCall("{CALL max_test_report()}");
+            var resultSet = callableStatement.executeQuery();
+
+            if (resultSet.next()) {
+                max = resultSet.getInt("max_id");
+            }
+
+        } catch (Exception e) {
+            System.out.println("User Max Error " + e);
+        }
+
+        return max;
     }
 
 }
