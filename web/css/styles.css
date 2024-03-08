@@ -9,6 +9,7 @@
 
 body {
     background-color: var(--light);
+    margin: 0;
 }
 
 /* heading line css code */
@@ -24,6 +25,7 @@ body {
 .footer {
     background-color: var(--dark);
     color: var(--darkLight);
+    
 }
 
 .footer p {

@@ -51,8 +51,8 @@ public class LoginController extends HttpServlet {
 
 //            System.out.println("ID is : " + loginUserDetails.getId() + "  privilages is " + loginUserDetails.getPrivilages());
             switch (privi) {
-                case "patient":
-                    response.sendRedirect(request.getContextPath() + "/Test_report_details?id=" + logID + "&type=" + privi);
+                case "PATIENT":
+                    response.sendRedirect(request.getContextPath() + "/Test_report_details?id=" + logID + "&command=LOAD");
                     break;
 
                 case "ADMIN":
@@ -60,7 +60,7 @@ public class LoginController extends HttpServlet {
                     break;
 
                 case "TECH":
-                    response.sendRedirect(request.getContextPath() + "/Technician-Home?id=" + logID + "&type=" + privi);
+                    response.sendRedirect(request.getContextPath() + "/Technician-Home?id=" + logID + "&command=LOAD");
                     break;
 
                 case "FDESK":

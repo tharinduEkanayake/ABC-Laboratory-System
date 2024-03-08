@@ -15,9 +15,11 @@
         <link href="bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="data_tables/datatables.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+        <link href="css/footer-alignment.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <!--Header tag-->
+        <div class="content">
+            <!--Header tag-->
         <div class="container-fluid main-headding pt-2 pb-4 pt-4 mb-4">
             <div class="row">
                 <div class="left col-6">
@@ -123,6 +125,9 @@
                 </tbody>
             </table>
         </div>
+            
+        </div>
+        
 
 
 

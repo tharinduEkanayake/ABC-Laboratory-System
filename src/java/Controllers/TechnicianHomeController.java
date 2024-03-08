@@ -22,8 +22,15 @@ public class TechnicianHomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        RequestDispatcher dispatcher = request.getRequestDispatcher("technician-home.jsp");
-        dispatcher.forward(request, response);
+        String command = request.getParameter("command");
+        
+        switch(command){
+            case "LOAD":
+                loadPendingAppointmnet(request,response);
+                break;
+        }
+        
+        
     }
 
     
@@ -34,5 +41,14 @@ public class TechnicianHomeController extends HttpServlet {
     }
 
    
+    protected void loadPendingAppointmnet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        var appointmentList = DBUtil.getPendingAppointment();
+        
+        request.setAttribute("a_list", appointmentList);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("technician-home.jsp");
+        dispatcher.forward(request, response);        
+    }
 
 }

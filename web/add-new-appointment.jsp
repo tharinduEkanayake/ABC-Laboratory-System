@@ -26,158 +26,163 @@
 
         <link href="bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+        <link href="css/footer-alignment.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div class="container-fluid main-headding pt-2 pb-4 pt-4 mb-4">
-            <div class="row">
-                <div class="left col-6">
-                    <h1 class="text-start">ABC Laboratory System</h1>
-                </div>
-
-                <div class="right col-6 align-self-center">
-                    <a href="/ABCLaboratorySystem/Log-Out"><button class="btn btn-danger">Log Out</button></a>
-                    <span class="badge rounded-pill bg-dark">
-
-                        <c:set var="typeaAD" value="ADMIN" />
-                        <c:if test="${sessionScope.privilages eq typeaAD}">
-                            Admin Login
-                        </c:if>
-
-                        <c:set var="typeaFD" value="FDESK" />
-                        <c:if test="${sessionScope.privilages eq typeaFD}">
-                            Front Desk Login
-                        </c:if>
-
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sub headding -->
-        <div class="container-fluid subHeaddignContainer pt-3 mb-4">
-            <div class="container">
-                <div class="d-inline subhead">
-                    <a href="/ABCLaboratorySystem/Admin-Home"><h5 class="d-inline-block rounded-top">Home</h5></a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Form Headding  -->
-        <div class="form-headding">
-            <hr />
-            <div class="container">
-                <h2 class="form-headding">Add New Appointment</h2>
-            </div>
-            <hr />
-        </div>
-
-        <!--Appointment Form-->
-        <div class="container mt-3 mb-3">
-            <!--<form action="" method="" class="needs-validation">-->
-            <div class="mb-3 row">
-                <label for="inputID" class="col-2 col-form-label">Appointment ID</label>
-                <div class="col-sm-3">
-                    <input type="text" class="form-control" id="inputID" value="${maxID + 1}" name="a_id" required readonly />
-                </div>
-            </div>
-
-            <div class="mb-3 row">
-                <div class="col-5">
-                    <div class="row">
-                        <label for="inputADate" class="col-4 col-form-label">Appointment Date</label>
-                        <div class="col-sm-8">
-                            <input type="date" class="form-control" id="inputADate" name="a_date" min="<%= formattedDate%>" required />
-                        </div>
+        <div class="content">
+            <div class="container-fluid main-headding pt-2 pb-4 pt-4 mb-4">
+                <div class="row">
+                    <div class="left col-6">
+                        <h1 class="text-start">ABC Laboratory System</h1>
                     </div>
-                </div>
-                <div class="col-6">
-                    <div class="row">
-                        <label for="inputATime" class="col-4 col-form-label">Appointment Time</label>
-                        <div class="col-sm-8">
-                            <input type="time" class="form-control" id="inputATime" name="a_time" required />
-                        </div>
+
+                    <div class="right col-6 align-self-center">
+                        <a href="/ABCLaboratorySystem/Log-Out"><button class="btn btn-danger">Log Out</button></a>
+                        <span class="badge rounded-pill bg-dark">
+
+                            <c:set var="typeaAD" value="ADMIN" />
+                            <c:if test="${sessionScope.privilages eq typeaAD}">
+                                Admin Login
+                            </c:if>
+
+                            <c:set var="typeaFD" value="FDESK" />
+                            <c:if test="${sessionScope.privilages eq typeaFD}">
+                                Front Desk Login
+                            </c:if>
+
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <div class="mb-3 row">
-                <div class="col-5">
-                    <div class="row">
-                        <label for="inputPID" class="col-4 col-form-label">Patient ID</label>
-                        <div class="col-sm-8">
-                            <!--<input type="number" class="form-control" id="inputPID" min="1" name="p_id" required />--> 
+            <!-- Sub headding -->
+            <div class="container-fluid subHeaddignContainer pt-3 mb-4">
+                <div class="container">
+                    <div class="d-inline subhead">
+                        <a href="/ABCLaboratorySystem/Admin-Home"><h5 class="d-inline-block rounded-top">Home</h5></a>
+                    </div>
+                </div>
+            </div>
 
-                            <select class="form-select" id="inputPID" aria-label="Default select inputGender" name="p_id">
-                                <option value="0" selected disabled>Choose the Patient</option>
+            <!-- Form Headding  -->
+            <div class="form-headding">
+                <hr />
+                <div class="container">
+                    <h2 class="form-headding">Add New Appointment</h2>
+                </div>
+                <hr />
+            </div>
+
+            <!--Appointment Form-->
+            <div class="container mt-3 mb-3">
+                <!--<form action="" method="" class="needs-validation">-->
+                <div class="mb-3 row">
+                    <label for="inputID" class="col-2 col-form-label">Appointment ID</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="inputID" value="${maxID + 1}" name="a_id" required readonly />
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="col-5">
+                        <div class="row">
+                            <label for="inputADate" class="col-4 col-form-label">Appointment Date</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" id="inputADate" name="a_date" min="<%= formattedDate%>" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <label for="inputATime" class="col-4 col-form-label">Appointment Time</label>
+                            <div class="col-sm-8">
+                                <input type="time" class="form-control" id="inputATime" name="a_time" required />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="col-5">
+                        <div class="row">
+                            <label for="inputPID" class="col-4 col-form-label">Patient ID</label>
+                            <div class="col-sm-8">
+                                <!--<input type="number" class="form-control" id="inputPID" min="1" name="p_id" required />--> 
+
+                                <select class="form-select" id="inputPID" aria-label="Default select inputGender" name="p_id">
+                                    <option value="0" selected disabled>Choose the Patient</option>
+
+                                    <!--load the test list-->
+                                    <c:forEach var="item" items="${patientDetails}">
+                                        <option value="${item.p_id}">${item.p_id}</option>                                                                  
+                                    </c:forEach>
+
+                                </select>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <label for="inputTodayDate" class="col-4 col-form-label">Registration Date</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" id="inputTodayDate" name="r_date" value="<%= formattedDate%>" required readonly/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="col-6 row">
+                        <label for="inputGender" class="col-3 col-form-label">Test List</label>
+                        <div class="col-sm-8">
+                            <select class="form-select" id="testSelector" aria-label="Default select inputGender" name="p_gender">
+                                <option value="0" selected disabled>Choose the Test</option>
 
                                 <!--load the test list-->
-                                <c:forEach var="item" items="${patientDetails}">
-                                    <option value="${item.p_id}">${item.p_id}</option>                                                                  
+                                <c:forEach var="item" items="${testPacks}">
+                                    <c:if test="${item.is_deleted eq 'F'}">
+                                        <option value="${item.t_id}">${item.t_name}</option>
+                                    </c:if>                                    
                                 </c:forEach>
 
                             </select>
-
-
+                        </div>
+                        <div class="col-1">
+                            <button class="btn btn-primary" id="btnTest">+</button>
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="row">
-                        <label for="inputTodayDate" class="col-4 col-form-label">Registration Date</label>
-                        <div class="col-sm-8">
-                            <input type="date" class="form-control" id="inputTodayDate" name="r_date" value="<%= formattedDate%>" required readonly/>
-                        </div>
-                    </div>
+
+                <div class="row">
+                    <table class="table table-striped" id="testTable">
+                        <thead>
+                            <tr>
+                                <th>Test ID</th>
+                                <th>Test Name</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
-            </div>
 
-            <div class="mb-3 row">
-                <div class="col-6 row">
-                    <label for="inputGender" class="col-3 col-form-label">Test List</label>
-                    <div class="col-sm-8">
-                        <select class="form-select" id="testSelector" aria-label="Default select inputGender" name="p_gender">
-                            <option value="0" selected disabled>Choose the Test</option>
+                <input type="text" class="" value="PATIENT" name="p_privileges" hidden />
 
-                            <!--load the test list-->
-                            <c:forEach var="item" items="${testPacks}">
-                                <c:if test="${item.is_deleted eq 'F'}">
-                                    <option value="${item.t_id}">${item.t_name}</option>
-                                </c:if>                                    
-                            </c:forEach>
-
-                        </select>
+                <div class="row justify-content-end">
+                    <div class="col-3">
+                        <button type="submit" id="btnsubmit" class="btn btn-success w-100">Add Appointment</button>
                     </div>
-                    <div class="col-1">
-                        <button class="btn btn-primary" id="btnTest">+</button>
-                    </div>
+                    <div class="col-1"></div>
                 </div>
+                <!--</form>-->
             </div>
 
-            <div class="row">
-                <table class="table table-striped" id="testTable">
-                    <thead>
-                        <tr>
-                            <th>Test ID</th>
-                            <th>Test Name</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-
-            <input type="text" class="" value="PATIENT" name="p_privileges" hidden />
-
-            <div class="row justify-content-end">
-                <div class="col-3">
-                    <button type="submit" id="btnsubmit" class="btn btn-success w-100">Add Appointment</button>
-                </div>
-                <div class="col-1"></div>
-            </div>
-            <!--</form>-->
         </div>
 
-        
+
+
 
 
 

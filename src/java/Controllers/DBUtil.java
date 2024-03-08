@@ -10,6 +10,7 @@ import java.util.List;
 import Models.LoginModel;
 import Models.PatientTesteReportModel;
 import Models.Patient_list;
+import Models.PendingAppointment;
 import Models.Test;
 import Models.Users;
 
@@ -33,9 +34,62 @@ public class DBUtil {
         }
         return connection;
     }
+    
+    public static void updateTestReportDetails(int tr_id,String t_time,String r_data,int t_id) {
+        
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL updateTestReportDetails(?,?,?,?)}");
+
+            callableStatement.setInt(1, tr_id);
+            callableStatement.setString(2,t_time);
+            callableStatement.setString(3,r_data);
+            callableStatement.setInt(4,t_id);
+
+            callableStatement.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println("update User error : " + e);
+        }
+
+    }
+    
+    
+    
+    
+    
+
+    public static List<PendingAppointment> getPendingAppointment() {
+        ArrayList<PendingAppointment> appointmentList = new ArrayList<>();
+
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL getpPendingAppointmentList()}");
+
+            var resultSet = callableStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+//                test_repo_id, int appointment, int patient_id, String p_name, String t_name
+                int test_repo_id = resultSet.getInt("test_repo_id");
+                int appointment_id = resultSet.getInt("appointment_id");
+                int patient_id = resultSet.getInt("patient_id");
+                String p_name = resultSet.getString("p_name");
+                String t_name = resultSet.getString("t_name");
+
+                var appointment = new PendingAppointment(test_repo_id,appointment_id,patient_id,p_name,t_name);
+                appointmentList.add(appointment);
+            }
+
+        } catch (Exception e) {
+            System.out.println("update User error : " + e);
+        }
+
+        return appointmentList;
+    }
 
     public static void deleteAppointment(int a_id) {
-         
+
         var connection = getConnection();
         try {
             var callableStatement = connection.prepareCall("{CALL delete_appointment(?)}");
@@ -47,7 +101,7 @@ public class DBUtil {
         } catch (Exception e) {
             System.out.println("update User error : " + e);
         }
-        
+
     }
 
     public static List<AppointmentSelectedTest> getAppointmentSelectedTestDetails(int a_id) {
