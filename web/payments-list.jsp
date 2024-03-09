@@ -1,6 +1,6 @@
 <%-- 
-    Document   : patientDetails
-    Created on : Mar 1, 2024, 12:02:35 PM
+    Document   : payments-list
+    Created on : Mar 8, 2024, 12:16:51 PM
     Author     : Tharindu Konesh
 --%>
 <%@ page session="true" %>
@@ -10,20 +10,21 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Customer Details</title>
+        <title>JSP Page</title>
 
-        <link href="bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="data_tables/datatables.min.css" rel="stylesheet" type="text/css"/>
+        <link href="bootstrap-5.0.2-dist/css/bootstrap.rtl.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+        <link href="data_tables/datatables.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/footer-alignment.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+
         <div class="content">
             <!--Header tag-->
             <div class="container-fluid main-headding pt-2 pb-4 pt-4 mb-4">
                 <div class="row">
                     <div class="left col-6">
-                        <h1 class="text-start">ABC Laboratory System</h1>
+                        <h1 class="">ABC Laboratory System</h1>
                     </div>
 
                     <div class="right col-6 align-self-center">
@@ -53,7 +54,7 @@
                         <a href="/ABCLaboratorySystem/Admin-Home"><h5 class="d-inline-block rounded-top">Home</h5></a>
                     </div>
                     <div class="d-inline subhead">
-                        <a href=""><h5 class="d-inline-block rounded-top online">Customer</h5></a>
+                        <a href="/ABCLaboratorySystem/Customer-Details?command=LOAD"><h5 class="d-inline-block rounded-top ">Customer</h5></a>
                     </div>
 
 
@@ -69,59 +70,45 @@
                     <div class="d-inline subhead">
                         <a href="/ABCLaboratorySystem/Appointment-List?command=LOAD"><h5 class="d-inline-block rounded-top">Appointments</h5></a>
                     </div>
+
                     <div class="d-inline subhead">
-                        <a href="/ABCLaboratorySystem/Payments?command=LOAD"><h5 class="d-inline-block rounded-top">Payments</h5></a>
+                        <a href=""><h5 class="d-inline-block rounded-top online">Payments</h5></a>
                     </div>
                 </div>
             </div>
 
             <!-- Form Heading  -->
-            <div class="form-headding ">
+            <div class="form-headding mb-4">
                 <hr />
                 <div class="container">
-                    <h2 class="form-headding ">Patient Details List</h2>
+                    <h2 class="form-headding ">Payment List</h2>
                 </div>
                 <hr />
             </div>
 
-            <!--Add new Customer link button-->
-            <div class="container btn-insert text-right">
-                <a href="Insert-Customer"><button class="btn btn-success">Add New Customer</button></a>
-            </div>
 
             <!-- View Data Table -->
             <div class="container">
                 <table id="testReports" class="display" >
                     <thead>
                         <tr>
-                            <th>Patient ID</th>
-                            <th>Name</th>
-                            <th>Gender</th>
-                            <th>Address</th>
-                            <th>Birthday</th>
-                            <!--<th>Age</th>-->
-                            <th>EMail</th>
-                            <th>Phone Number</th>
-                            <!--<th>Register Date</th>-->
-                            <!--<th>Password Changed Date</th>-->
-                            <th></th>
-
+                            <td>Appointment ID</td>
+                            <td>Test Report ID</td>
+                            <td>Test Name</td>
+                            <td>Amount</td>
+                            <!--<td></td>-->
+                            <td></td>
+                            
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="item" items="${patientDtailsList}">
+                        <c:forEach var="item" items="${paymentList}">
                             <tr>
-                                <td>${item.p_id}</td>
-                                <td>${item.p_name}</td>
-                                <td>${item.p_gender}</td>
-                                <td>${item.p_address}</td>
-                                <td>${item.p_birthday}</td>
-
-                                <td>${item.p_email}</td>
-                                <td>${item.p_phone}</td>
-
-                                <td><a href="Update-Customer?id=${item.p_id}"><button>Update</button></a></td>
-
+                                <td>${item.a_id}</td>
+                                <td>${item.test_report_id}</td>
+                                <td>${item.t_name}</td>
+                                <td>${item.charges}</td>
+                                <td><a href="/ABCLaboratorySystem/Payments?command=UPDATE&id=${item.test_report_id}"><button>Make Payment</button></a></td>
 
                             </tr>
                         </c:forEach>
@@ -147,17 +134,6 @@
 
         <script>
             new DataTable('#testReports');
-        </script>
-
-        <script>
-//            function confirmAction(id) {
-//                var result = confirm("Are you sure you want to perform this action?");
-//                if (result) {
-//                    
-//                    window.location.href = "Customer-Details?command=DEL&id="+ id;
-//                    
-//                } 
-//            }
         </script>
     </body>
 </html>

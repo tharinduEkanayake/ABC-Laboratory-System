@@ -67,6 +67,9 @@
                     <div class="d-inline subhead">
                         <a href=""><h5 class="d-inline-block rounded-top online">Appointments</h5></a>
                     </div>
+                    <div class="d-inline subhead">
+                        <a href="/ABCLaboratorySystem/Payments?command=LOAD"><h5 class="d-inline-block rounded-top">Payments</h5></a>
+                    </div>
                 </div>
             </div>
 
@@ -126,9 +129,9 @@
             <div id ="model_container">
 
             </div>
-            
+
         </div>
-        
+
 
 
         <div class="footer container-fluid text-center py-4">
@@ -141,7 +144,7 @@
         <script src="data_tables/datatables.min.js" type="text/javascript"></script>
 
         <script>
-                                        new DataTable('#AppointmentData');
+//                                            new DataTable('#AppointmentData');
         </script>
 
         <script>
@@ -157,6 +160,12 @@
 
         <script>
             $(document).ready(function () {
+                $('#AppointmentData').dataTable({
+                    "order": []
+                });
+
+
+
                 $(".btnTestDetailsView").click(function () {
                     let a_id = $(this).attr('id');
 

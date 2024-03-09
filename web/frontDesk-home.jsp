@@ -55,6 +55,12 @@
                     </div>
                 </a>
 
+                <a href="/ABCLaboratorySystem/Payments?command=LOAD">
+                    <div class=" bg-dark d-inline-block me-3 mb-3" style="width: 250px; height: 250px;">
+                        <p class="text-light">Payment</p>
+                    </div>
+                </a>
+
             </div>
 
         </div>

@@ -50,6 +50,10 @@
                     <div class="d-inline subhead">
                         <a href="/ABCLaboratorySystem/Appointment-List?command=LOAD"><h5 class="d-inline-block rounded-top">Appointments</h5></a>
                     </div>
+                    
+                    <div class="d-inline subhead">
+                        <a href="/ABCLaboratorySystem/Payments?command=LOAD"><h5 class="d-inline-block rounded-top">Payments</h5></a>
+                    </div>
                 </div>
             </div>
 

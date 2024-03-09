@@ -10,7 +10,9 @@ import java.util.List;
 import Models.LoginModel;
 import Models.PatientTesteReportModel;
 import Models.Patient_list;
+import Models.Payment;
 import Models.PendingAppointment;
+import Models.PendingPayment;
 import Models.Test;
 import Models.Users;
 
@@ -35,6 +37,142 @@ public class DBUtil {
         return connection;
     }
     
+    public static void updateAppointmentStatus(int a_id) {
+
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL updateAppointmentStatus(?)}");
+
+            callableStatement.setInt(1, a_id);
+
+            callableStatement.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println("update User error : " + e);
+        }
+
+    }
+    
+    public static void insertPayment(int p_id,double amount,String p_method,String p_date,int a_id) {
+
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL insert_payment(?,?,?,?,?,?)}");
+
+            callableStatement.setInt(1, p_id);
+            callableStatement.setDouble(2, amount);
+            callableStatement.setString(3, p_method);
+            callableStatement.setString(4, p_date);
+            callableStatement.setString(5, "T");
+            callableStatement.setInt(6, a_id);
+
+            callableStatement.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println("update User error : " + e);
+        }
+
+    }    
+    
+    public static PendingPayment getOneTestReport(int tr_id){
+        PendingPayment paymentList = null ;
+        
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL getOneTestReport(?)}");
+
+            callableStatement.setInt(1, tr_id);
+            
+            var resultSet = callableStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                int test_report_id = resultSet.getInt("test_repo_id");
+                int a_id = resultSet.getInt("appointment_id");
+                String t_name = resultSet.getString("t_name");
+                double charges = resultSet.getDouble("charges");
+
+                var payment = new PendingPayment(test_report_id,  a_id,  t_name,  charges);
+                return payment;
+            }
+
+        } catch (Exception e) {
+            System.out.println("get one payment error : " + e);
+        }
+                
+        return paymentList;
+    }
+    
+//    public static Payment getOnePayment(int p_id){
+//        Payment paymentList = null ;
+//        
+//        var connection = getConnection();
+//        try {
+//            var callableStatement = connection.prepareCall("{CALL getOnePayment(?)}");
+//
+//            callableStatement.setInt(1, p_id);
+//            
+//            var resultSet = callableStatement.executeQuery();
+//
+//            if (resultSet.next()) {
+//
+//                int pay_id = resultSet.getInt("pay_id");
+//                double total_value = resultSet.getDouble("total_value");
+//                String pay_method = resultSet.getString("pay_method");
+//                String pay_date = resultSet.getString("pay_date");
+//                String pay_status = resultSet.getString("pay_status");
+//                int appointment_id = resultSet.getInt("appointment_id");
+//
+//                var payment = new Payment(pay_id,  total_value,  pay_method,  pay_date,  pay_status,  appointment_id);
+//                return payment;
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println("get one payment error : " + e);
+//        }
+//                
+//        return paymentList;
+//    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public static List<PendingPayment> getPendingPaymentList(){
+        ArrayList<PendingPayment> paymentList = new ArrayList<>();
+        
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL getPendingPayment()}");
+
+            var resultSet = callableStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+//                , int , String , double 
+//                        
+
+                int test_report_id = resultSet.getInt("test_repo_id");
+                int a_id = resultSet.getInt("appointment_id");
+                String t_name = resultSet.getString("t_name");
+                double charges = resultSet.getDouble("charges");
+                
+
+                var payment = new PendingPayment(test_report_id,  a_id,  t_name,  charges);
+                paymentList.add(payment);
+            }
+
+        } catch (Exception e) {
+            System.out.println("update User error : " + e);
+        }
+                
+        return paymentList;
+    }
+    
     public static void updateTestReportDetails(int tr_id,String t_time,String r_data,int t_id) {
         
         var connection = getConnection();
@@ -54,11 +192,6 @@ public class DBUtil {
 
     }
     
-    
-    
-    
-    
-
     public static List<PendingAppointment> getPendingAppointment() {
         ArrayList<PendingAppointment> appointmentList = new ArrayList<>();
 
@@ -732,5 +865,24 @@ public class DBUtil {
 
         return max;
     }
+    
+    public static int getPaymentMax() {
+        int max = 0;
+        try (var connection = getConnection()) {
+
+            var callableStatement = connection.prepareCall("{CALL max_payment()}");
+            var resultSet = callableStatement.executeQuery();
+
+            if (resultSet.next()) {
+                max = resultSet.getInt("max_id");
+            }
+
+        } catch (Exception e) {
+            System.out.println("User Max Error " + e);
+        }
+
+        return max;
+    }
+
 
 }

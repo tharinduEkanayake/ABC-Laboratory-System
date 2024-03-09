@@ -98,22 +98,12 @@ public class AppointmetController extends HttpServlet {
         String a_time = request.getParameter("a_time");
         int p_id = Integer.parseInt(request.getParameter("p_id"));
         String r_date = request.getParameter("r_date");
-        String testIDs = request.getParameter("testIDs");
+        String testID = request.getParameter("testID");
 
         DBUtil.insertAppointments(a_id, a_date, a_time, r_date, "PENDING", p_id);
-//        System.out.println(request.getParameter("testIDs"));
-//        System.out.println(testIDs);
+        DBUtil.insertTestReportByFrontdesk(a_id, Integer.parseInt(testID));
 
-//      remove the unwanted characters
-        String modifiedString = testIDs.replaceAll("[\\[\\]\"]", "");
-
-//      Create the array using the string
-        String[] array = modifiedString.split(",");
-
-        for (String value : array) {
-            DBUtil.insertTestReportByFrontdesk(a_id, Integer.parseInt(value));
-        }
-
+        loadAppointmentDetails(request,response);
     }
 
     protected void loadAppointmentDetails(HttpServletRequest request, HttpServletResponse response)
