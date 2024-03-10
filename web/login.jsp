@@ -11,6 +11,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login Form</title>
+
+        <link href="bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
         <style>
             body {
                 display: flex;
@@ -19,6 +27,7 @@
                 height: 100vh;
                 margin: 0;
                 background-color: #f2f2f2;
+                background-color: var(--light);
             }
 
             .login-container {
@@ -26,11 +35,18 @@
                 padding: 20px;
                 border-radius: 8px;
                 box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+                background-color: var(--dark);
             }
 
-            .login-container h2,h1 {
+            .login-container h1 {
                 margin-top: 0;
+                padding: 1rem 0;
                 text-align: center;
+                color: var(--darkLight);
+
+                font-family: "Yellowtail", cursive;
+                font-weight: 400;
+                font-style: normal;
             }
 
             .login-form input[type="text"],
@@ -41,6 +57,8 @@
                 border: 1px solid #ccc;
                 border-radius: 5px;
                 box-sizing: border-box;
+                background-color: var(--light);
+                color: var(--dark);
             }
 
             .login-form input[type="submit"] {
@@ -57,9 +75,9 @@
             .login-form input[type="submit"]:hover {
                 background-color: #45a049;
             }
-        </style>
 
-        <link href="bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+        </style>        
     </head>
     <body>
 

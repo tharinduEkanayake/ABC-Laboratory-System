@@ -6,8 +6,13 @@ body {
 
 .content {
     flex: 1;
+    margin-bottom: 2rem; 
 }
 
 .footer {
     margin-top: auto;
+}
+
+.social-media i{
+   margin: 1rem;
 }

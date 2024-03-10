@@ -1,0 +1,24 @@
+.select-item {
+    background-color: var(--dark);
+    padding : 2rem;
+    border-radius: 10px;
+}
+
+.select-item-icon h1 {
+    padding: 4rem 0;
+}
+
+.select-item-icon i {
+    color: var(--darkLight);
+    padding: 3rem 0;
+}
+
+.select-item-head p{
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: var(--light);
+}
+
+a{
+    text-decoration: none;
+}

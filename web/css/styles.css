@@ -18,6 +18,13 @@ body {
     color: var(--shapeDark);
 }
 
+.main-headding .left h1 {
+  font-family: "Salsa", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 .main-headding .right {
     text-align: right;
 }
@@ -37,6 +44,7 @@ body {
     background-color: var(--dark);
     color: var(--shapeDark);
 }
+
 
 .subhead h5 {
     margin: 0;
