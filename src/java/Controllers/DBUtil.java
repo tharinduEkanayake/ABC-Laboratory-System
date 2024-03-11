@@ -14,7 +14,14 @@ import Models.Payment;
 import Models.PendingAppointment;
 import Models.PendingPayment;
 import Models.Test;
+import Models.TodayAppointments;
+import Models.TodayIncome;
+import Models.TotalCustomers;
+import Models.TotalTest;
 import Models.Users;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  *
@@ -35,6 +42,149 @@ public class DBUtil {
             System.err.println(ex);
         }
         return connection;
+    }
+    
+    
+    
+    //report data loading
+    public static TotalTest getTotalTest(){
+        var amount = new TotalTest();
+
+        var connection = getConnection();
+        try {
+
+            var callableStatement = connection.prepareCall("{CALL getTotalTest()}");
+
+            var resultSet = callableStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                int totalAmount = resultSet.getInt("total_test");
+                
+                amount.setTotaltest(totalAmount);
+            }
+
+        } catch (Exception e) {
+            System.out.println("one User error : " + e);
+        }
+
+        return amount;
+    }
+    
+    public static TotalCustomers getTotalCustomers(){
+        var amount = new TotalCustomers();
+
+        var connection = getConnection();
+        try {
+
+            var callableStatement = connection.prepareCall("{CALL getTotalCustomers()}");
+
+            var resultSet = callableStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                int totalAmount = resultSet.getInt("total_customers");
+                
+                amount.setCusTotal(totalAmount);
+            }
+
+        } catch (Exception e) {
+            System.out.println("one User error : " + e);
+        }
+
+        return amount;
+    }
+    
+    public static TodayIncome getTodayIncome(){
+        var amount = new TodayIncome();
+
+        var connection = getConnection();
+        try {
+
+            var callableStatement = connection.prepareCall("{CALL getTodayIncome()}");
+
+            var resultSet = callableStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                int totalAmount = resultSet.getInt("today_income");
+                
+
+//                var user = new TodayAppointments(totalAmount);
+                amount.setTodayIncome(totalAmount);
+            }
+
+        } catch (Exception e) {
+            System.out.println("one User error : " + e);
+        }
+
+        return amount;
+    }
+    
+    public static TodayAppointments getTodayAppointmnets(){
+        var amount = new TodayAppointments();
+
+        var connection = getConnection();
+        try {
+
+            var callableStatement = connection.prepareCall("{CALL getTodayAppointment()}");
+
+            var resultSet = callableStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                int totalAmount = resultSet.getInt("todat_appoint");
+                
+
+//                var user = new TodayAppointments(totalAmount);
+                amount.setTotalAppointments(totalAmount);
+            }
+
+        } catch (Exception e) {
+            System.out.println("one User error : " + e);
+        }
+
+        return amount;
+    }
+    
+    //report data end    
+    
+    public static void updateUserPassword(int l_id , String pass){
+        
+        //Password encryption
+        String encryptedPass = computeSHA224(pass);
+        
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL updateUserPassword(?,?)}");
+
+            callableStatement.setInt(1, l_id);
+            callableStatement.setString(2, encryptedPass);
+
+            callableStatement.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println("update patient password error : " + e);
+        }
+    }
+    
+    public static void updateCustomerPassword(int l_id , String pass){
+        
+        //Password encryption
+        String encryptedPass = computeSHA224(pass);
+        
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL updateCustomerPass(?,?)}");
+
+            callableStatement.setInt(1, l_id);
+            callableStatement.setString(2, encryptedPass);
+
+            callableStatement.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println("update patient password error : " + e);
+        }
     }
     
     public static void updateAppointmentStatus(int a_id) {
@@ -531,6 +681,9 @@ public class DBUtil {
     }
 
     public static void insertUserDetails(int u_id, String u_first_name, String u_last_name, String u_address, String u_gender, String u_email, String u_phone, String u_password, String u_privileges, String u_registered_date) {
+        
+        String encryptedPass = computeSHA224(u_password);
+        
         var connection = getConnection();
         try {
             var callableStatement = connection.prepareCall("{CALL insert_user(?,?,?,?,?,?,?,?,?,?)}");
@@ -542,7 +695,7 @@ public class DBUtil {
             callableStatement.setString(5, u_gender);
             callableStatement.setString(6, u_email);
             callableStatement.setString(7, u_phone);
-            callableStatement.setString(8, u_password);
+            callableStatement.setString(8, encryptedPass);
             callableStatement.setString(9, u_privileges);
             callableStatement.setString(10, u_registered_date);
 
@@ -554,7 +707,10 @@ public class DBUtil {
     }
 
     public static void insertCustomerDetails(int maxId, String p_name, String p_gender, String p_address, String p_birthday, String p_email, String p_phone, String p_password, String p_privileges, String p_register_date) {
-
+        
+        //Encrypt the password
+        String encryptPass = computeSHA224(p_password);
+        
         var connection = getConnection();
         try {
             var callableStatement = connection.prepareCall("{CALL insert_patient(?,?,?,?,?,?,?,?,?,?)}");
@@ -566,7 +722,7 @@ public class DBUtil {
             callableStatement.setString(5, p_birthday);
             callableStatement.setString(6, p_email);
             callableStatement.setString(7, p_phone);
-            callableStatement.setString(8, p_password);
+            callableStatement.setString(8, encryptPass);
             callableStatement.setString(9, p_privileges);
             callableStatement.setString(10, p_register_date);
 
@@ -706,13 +862,15 @@ public class DBUtil {
 
     public static LoginModel getLoginDetails(String lusername, String lpassword) {
         LoginModel user = null;
+        
+        String encryptedPass = computeSHA224(lpassword);
 
         var connection = getConnection();
         try {
             var callableStatement = connection.prepareCall("{CALL getLoginDetails(?,?)}");
 
             callableStatement.setString(1, lusername);
-            callableStatement.setString(2, lpassword);
+            callableStatement.setString(2, encryptedPass);
 
             var resultSet = callableStatement.executeQuery();
 
@@ -882,6 +1040,36 @@ public class DBUtil {
         }
 
         return max;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//  Sha224 Encryption Method
+    public static String computeSHA224(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-224");
+            byte[] hashBytes = md.digest(input.getBytes());
+
+            // Convert byte array to hexadecimal representation
+            BigInteger bigInt = new BigInteger(1, hashBytes);
+            String hashText = bigInt.toString(16);
+
+            // Zero padding to ensure hash length is 56 characters (224 bits)
+            while (hashText.length() < 56) {
+                hashText = "0" + hashText;
+            }
+
+            return hashText;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

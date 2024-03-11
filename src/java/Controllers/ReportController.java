@@ -1,4 +1,3 @@
-
 package Controllers;
 
 import java.io.IOException;
@@ -17,33 +16,40 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ReportController", urlPatterns = {"/Reports"})
 public class ReportController extends HttpServlet {
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String command = request.getParameter("command");
-        
-        switch (command){
+
+        switch (command) {
             case "LOAD":
-                loadReportList(request,response);
+                loadReportList(request, response);
                 break;
         }
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
-    
+
     protected void loadReportList(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        var todayAppointment = DBUtil.getTodayAppointmnets();
+        var todayIncome = DBUtil.getTodayIncome();
+        var totalCustomers = DBUtil.getTotalCustomers();
+        var totalTest = DBUtil.getTotalTest();
         
+        request.setAttribute("totalTest", totalTest);
+        request.setAttribute("totalCustomers", totalCustomers);
+        request.setAttribute("todayIncome", todayIncome);
+        request.setAttribute("todayAppointment", todayAppointment);
         RequestDispatcher dispatcher = request.getRequestDispatcher("report-list.jsp");
-            dispatcher.forward(request, response);
-        
+        dispatcher.forward(request, response);
+
     }
 
 }

@@ -79,7 +79,7 @@
                         <div class="rp-content">
                             <div class="row">
                                 <div class="col-6">
-                                    <h1>2000</h1>
+                                    <h1>${todayAppointment.totalAppointments}</h1>
                                 </div>
                                 <div class="col-6">
                                     <h1 class="icon"><i class="fa-regular fa-calendar-check fa-xl"></i></h1>
@@ -94,7 +94,7 @@
                         <div class="rp-content">
                             <div class="row">
                                 <div class="col-6">
-                                    <h1>45</h1>
+                                    <h1>${todayIncome.todayIncome}</h1>
                                 </div>
                                 <div class="col-6">
                                     <h1 class="icon"><i class="fa-solid fa-money-check-dollar fa-xl"></i></h1>
@@ -109,7 +109,7 @@
                         <div class="rp-content">
                             <div class="row">
                                 <div class="col-6">
-                                    <h1>45</h1>
+                                    <h1>${totalCustomers.cusTotal}</h1>
                                 </div>
                                 <div class="col-6">
                                     <h1 class="icon"><i class="fa-solid fa-users fa-xl"></i></h1>
@@ -119,12 +119,12 @@
                     </div>
                     <div class="col-3 rp-item">
                         <div class="">
-                            <h5>Tests</h5>
+                            <h5>Active Tests</h5>
                         </div>
                         <div class="rp-content">
                             <div class="row">
                                 <div class="col-6">
-                                    <h1>100</h1>
+                                    <h1>${totalTest.totaltest}</h1>
                                 </div>
                                 <div class="col-6">
                                     <h1 class="icon"><i class="fa-solid fa-flask-vial fa-xl"></i></h1>

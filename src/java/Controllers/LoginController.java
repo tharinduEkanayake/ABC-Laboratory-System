@@ -36,6 +36,7 @@ public class LoginController extends HttpServlet {
         String uname = request.getParameter("username");
         String passw = request.getParameter("password");
 
+        //call the database
         var loginUserDetails = DBUtil.getLoginDetails(uname, passw);
 
         if (loginUserDetails != null) {

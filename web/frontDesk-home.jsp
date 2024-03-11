@@ -97,6 +97,19 @@
                         </a>
                     </div>
                     
+                    <div class="col-3">
+                        <a href="/ABCLaboratorySystem/Password?command=LOAD">
+                            <div class="select-item me-3 mb-3" >
+                                <h1 class="select-item-icon">
+                                    <i class="fa-solid fa-user-lock fa-xl"></i>
+                                </h1>
+                                <div class="select-item-head">
+                                    <p>Change Password</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
                 </div>
 
 

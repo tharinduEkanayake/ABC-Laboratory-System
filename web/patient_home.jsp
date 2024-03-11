@@ -32,7 +32,12 @@
                     </div>
 
                     <div class="right col-6 align-self-center">
-                        <a href="/ABCLaboratorySystem/Log-Out"><button class="btn btn-danger"><i class="fa-solid fa-right-from-bracket fa-sm" style="margin-right: 1rem;"></i> Log Out</button></a>
+                        
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <a href="/ABCLaboratorySystem/Log-Out"><button class="btn btn-danger"> <i class="fa-solid fa-right-from-bracket fa-sm" style="margin-right: 1rem;"></i> Log Out</button></a>
+                            <a href="/ABCLaboratorySystem/Password?command=LOAD"><button class="btn btn-primary"> <i class="fa-solid fa-user-lock fa-sm"></i> Password Change</button></a>                          
+                        </div>
+                        <!--<a href="/ABCLaboratorySystem/Log-Out"><button class="btn btn-danger"><i class="fa-solid fa-right-from-bracket fa-sm" style="margin-right: 1rem;"></i> Log Out</button></a>-->
                         <span class="badge rounded-pill bg-dark">Patient Login</span>
                     </div>
                 </div>

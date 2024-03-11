@@ -11,11 +11,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home</title>
 
+
         <link href="bootstrap-5.0.2-dist/css/bootstrap.rtl.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="data_tables/datatables.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/footer-alignment.css" rel="stylesheet" type="text/css"/>
-        
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Salsa&family=Yellowtail&display=swap" rel="stylesheet">
@@ -32,8 +33,14 @@
                     </div>
 
                     <div class="right col-6 align-self-center">
-                        <a href="/ABCLaboratorySystem/Log-Out"><button class="btn btn-danger"> <i class="fa-solid fa-right-from-bracket fa-sm" style="margin-right: 1rem;"></i> Log Out</button></a>
+
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <a href="/ABCLaboratorySystem/Log-Out"><button class="btn btn-danger"> <i class="fa-solid fa-right-from-bracket fa-sm" style="margin-right: 1rem;"></i> Log Out</button></a>
+                            <a href="/ABCLaboratorySystem/Password?command=LOAD"><button class="btn btn-primary"> <i class="fa-solid fa-user-lock fa-sm"></i> Password Change</button></a>                          
+                        </div>
+                        
                         <span class="badge rounded-pill bg-dark">Technician Login</span>
+                                                
                     </div>
                 </div>
             </div>
@@ -87,10 +94,10 @@
                 &copy; 2024 ABC Laboratory | All rights reserved.
             </div>
             <div class="social-media mt-3">                
-                    <i class="fa-brands fa-square-facebook fa-lg me-2"></i>
-                    <i class="fa-brands fa-instagram fa-lg me-2"></i>
-                    <i class="fa-brands fa-square-twitter fa-lg me-2"></i>
-                    <i class="fa-brands fa-square-whatsapp fa-lg "></i>
+                <i class="fa-brands fa-square-facebook fa-lg me-2"></i>
+                <i class="fa-brands fa-instagram fa-lg me-2"></i>
+                <i class="fa-brands fa-square-twitter fa-lg me-2"></i>
+                <i class="fa-brands fa-square-whatsapp fa-lg "></i>
             </div>
         </div>
 

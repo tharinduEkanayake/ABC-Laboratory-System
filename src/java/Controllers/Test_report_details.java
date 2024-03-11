@@ -47,13 +47,16 @@ public class Test_report_details extends HttpServlet {
     protected void loadTestReportDetails(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        int pati_id = Integer.parseInt(request.getParameter("id"));
-        var reportDetails = DBUtil.getTestReportList(pati_id);
+//        dont asign the id parameter for the url id
+
+
+//        int pati_id = Integer.parseInt(request.getParameter("id"));
+//        var reportDetails = DBUtil.getTestReportList(pati_id);
         
         
 //        System.out.println(reportDetails);
         
-        request.setAttribute("patientReportDetais", reportDetails);
+//        request.setAttribute("patientReportDetais", reportDetails);
         RequestDispatcher dispatcher = request.getRequestDispatcher("patient_home.jsp");
         dispatcher.forward(request, response);
         
