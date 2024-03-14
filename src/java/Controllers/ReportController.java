@@ -43,6 +43,12 @@ public class ReportController extends HttpServlet {
         var totalCustomers = DBUtil.getTotalCustomers();
         var totalTest = DBUtil.getTotalTest();
         
+        var dailyTotal = DBUtil.getDilyIncome();
+        var todatCompleTets = DBUtil.getTodayCompleteTest();
+        
+        request.setAttribute("dailyTotal", dailyTotal);
+        request.setAttribute("todayTest", todatCompleTets);
+        
         request.setAttribute("totalTest", totalTest);
         request.setAttribute("totalCustomers", totalCustomers);
         request.setAttribute("todayIncome", todayIncome);

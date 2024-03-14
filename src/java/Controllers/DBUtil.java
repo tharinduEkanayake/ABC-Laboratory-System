@@ -2,19 +2,23 @@ package Controllers;
 
 import Models.AppointmentSelectedTest;
 import Models.Appointment_list;
+import Models.DailyIncome;
+import Models.FinalReport;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Models.LoginModel;
-import Models.PatientTesteReportModel;
+import Models.PatientReport;
+
 import Models.Patient_list;
 import Models.Payment;
 import Models.PendingAppointment;
 import Models.PendingPayment;
 import Models.Test;
 import Models.TodayAppointments;
+import Models.TodayCompleteTests;
 import Models.TodayIncome;
 import Models.TotalCustomers;
 import Models.TotalTest;
@@ -43,11 +47,141 @@ public class DBUtil {
         }
         return connection;
     }
-    
-    
-    
+
+    public static FinalReport getFinalReportData(int tr_id) {
+
+        FinalReport reportList = new FinalReport();
+
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL getFinalReport(?)}");
+
+            callableStatement.setInt(1, tr_id);
+
+            var resultSet = callableStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                String tr_time = resultSet.getString("tr_time");
+                String t_report_data = resultSet.getString("t_report_data");
+                String t_name = resultSet.getString("t_name");
+                String references_level = resultSet.getString("references_level");
+                String a_date = resultSet.getString("a_date");
+                String a_time = resultSet.getString("a_time");
+                String p_name = resultSet.getString("p_name");
+                String p_gender = resultSet.getString("p_gender");
+                String p_email = resultSet.getString("p_email");
+                String p_phone = resultSet.getString("p_phone");
+                String ref_by = resultSet.getString("referr_by");
+                
+                reportList.setTr_time(tr_time);
+                reportList.setT_report_data(t_report_data);
+                reportList.setT_name(t_name);
+                reportList.setReferences_level(references_level);
+                reportList.setA_date(a_date);
+                reportList.setA_time(a_time);
+                reportList.setP_name(p_name);
+                reportList.setP_gender(p_gender);
+                reportList.setP_email(p_email);
+                reportList.setP_phone(p_phone);
+                reportList.setRef_by(ref_by);
+
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("Connection Error!  " + e);
+        }
+
+        return reportList;
+
+    }
+
+    public static List<PatientReport> getTestReportList(int pid) {
+
+        ArrayList<PatientReport> reportList = new ArrayList<>();
+
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL getCustomerHomeData(?)}");
+
+            callableStatement.setInt(1, pid);
+
+            var resultSet = callableStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                int a_id = resultSet.getInt("a_id");
+                String t_name = resultSet.getString("t_name");
+                String t_date = resultSet.getString("a_date");
+                String r_data = resultSet.getString("t_report_data");
+                int tr_id = resultSet.getInt("test_repo_id");
+
+                var test_reports = new PatientReport(a_id, t_name, t_date, r_data, tr_id);
+
+                reportList.add(test_reports);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("Connection Error!");
+        }
+
+        return reportList;
+    }
+
     //report data loading
-    public static TotalTest getTotalTest(){
+    public static List<TodayCompleteTests> getTodayCompleteTest() {
+        ArrayList<TodayCompleteTests> itemList = new ArrayList<>();
+
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL getTodayCompleteTests()}");
+
+            var resultSet = callableStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                String t_name = resultSet.getString("t_name");
+                int noOfTests = resultSet.getInt("tests");
+
+                var test = new TodayCompleteTests(noOfTests, t_name);
+                itemList.add(test);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Daily Income error : " + e);
+        }
+
+        return itemList;
+    }
+
+    public static List<DailyIncome> getDilyIncome() {
+        ArrayList<DailyIncome> incomeList = new ArrayList<>();
+
+        var connection = getConnection();
+        try {
+            var callableStatement = connection.prepareCall("{CALL getIncomeDayily()}");
+
+            var resultSet = callableStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                String date = resultSet.getString("pay_date");
+                double total = resultSet.getDouble("total");
+
+                var payment = new DailyIncome(date, total);
+                incomeList.add(payment);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Daily Income error : " + e);
+        }
+
+        return incomeList;
+    }
+
+    public static TotalTest getTotalTest() {
         var amount = new TotalTest();
 
         var connection = getConnection();
@@ -60,7 +194,7 @@ public class DBUtil {
             if (resultSet.next()) {
 
                 int totalAmount = resultSet.getInt("total_test");
-                
+
                 amount.setTotaltest(totalAmount);
             }
 
@@ -70,8 +204,8 @@ public class DBUtil {
 
         return amount;
     }
-    
-    public static TotalCustomers getTotalCustomers(){
+
+    public static TotalCustomers getTotalCustomers() {
         var amount = new TotalCustomers();
 
         var connection = getConnection();
@@ -84,7 +218,7 @@ public class DBUtil {
             if (resultSet.next()) {
 
                 int totalAmount = resultSet.getInt("total_customers");
-                
+
                 amount.setCusTotal(totalAmount);
             }
 
@@ -94,8 +228,8 @@ public class DBUtil {
 
         return amount;
     }
-    
-    public static TodayIncome getTodayIncome(){
+
+    public static TodayIncome getTodayIncome() {
         var amount = new TodayIncome();
 
         var connection = getConnection();
@@ -108,7 +242,6 @@ public class DBUtil {
             if (resultSet.next()) {
 
                 int totalAmount = resultSet.getInt("today_income");
-                
 
 //                var user = new TodayAppointments(totalAmount);
                 amount.setTodayIncome(totalAmount);
@@ -120,8 +253,8 @@ public class DBUtil {
 
         return amount;
     }
-    
-    public static TodayAppointments getTodayAppointmnets(){
+
+    public static TodayAppointments getTodayAppointmnets() {
         var amount = new TodayAppointments();
 
         var connection = getConnection();
@@ -134,7 +267,6 @@ public class DBUtil {
             if (resultSet.next()) {
 
                 int totalAmount = resultSet.getInt("todat_appoint");
-                
 
 //                var user = new TodayAppointments(totalAmount);
                 amount.setTotalAppointments(totalAmount);
@@ -146,14 +278,13 @@ public class DBUtil {
 
         return amount;
     }
-    
+
     //report data end    
-    
-    public static void updateUserPassword(int l_id , String pass){
-        
+    public static void updateUserPassword(int l_id, String pass) {
+
         //Password encryption
         String encryptedPass = computeSHA224(pass);
-        
+
         var connection = getConnection();
         try {
             var callableStatement = connection.prepareCall("{CALL updateUserPassword(?,?)}");
@@ -167,12 +298,12 @@ public class DBUtil {
             System.out.println("update patient password error : " + e);
         }
     }
-    
-    public static void updateCustomerPassword(int l_id , String pass){
-        
+
+    public static void updateCustomerPassword(int l_id, String pass) {
+
         //Password encryption
         String encryptedPass = computeSHA224(pass);
-        
+
         var connection = getConnection();
         try {
             var callableStatement = connection.prepareCall("{CALL updateCustomerPass(?,?)}");
@@ -186,7 +317,7 @@ public class DBUtil {
             System.out.println("update patient password error : " + e);
         }
     }
-    
+
     public static void updateAppointmentStatus(int a_id) {
 
         var connection = getConnection();
@@ -202,8 +333,8 @@ public class DBUtil {
         }
 
     }
-    
-    public static void insertPayment(int p_id,double amount,String p_method,String p_date,int a_id) {
+
+    public static void insertPayment(int p_id, double amount, String p_method, String p_date, int a_id) {
 
         var connection = getConnection();
         try {
@@ -222,17 +353,17 @@ public class DBUtil {
             System.out.println("update User error : " + e);
         }
 
-    }    
-    
-    public static PendingPayment getOneTestReport(int tr_id){
-        PendingPayment paymentList = null ;
-        
+    }
+
+    public static PendingPayment getOneTestReport(int tr_id) {
+        PendingPayment paymentList = null;
+
         var connection = getConnection();
         try {
             var callableStatement = connection.prepareCall("{CALL getOneTestReport(?)}");
 
             callableStatement.setInt(1, tr_id);
-            
+
             var resultSet = callableStatement.executeQuery();
 
             if (resultSet.next()) {
@@ -242,17 +373,17 @@ public class DBUtil {
                 String t_name = resultSet.getString("t_name");
                 double charges = resultSet.getDouble("charges");
 
-                var payment = new PendingPayment(test_report_id,  a_id,  t_name,  charges);
+                var payment = new PendingPayment(test_report_id, a_id, t_name, charges);
                 return payment;
             }
 
         } catch (Exception e) {
             System.out.println("get one payment error : " + e);
         }
-                
+
         return paymentList;
     }
-    
+
 //    public static Payment getOnePayment(int p_id){
 //        Payment paymentList = null ;
 //        
@@ -283,18 +414,9 @@ public class DBUtil {
 //                
 //        return paymentList;
 //    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    public static List<PendingPayment> getPendingPaymentList(){
+    public static List<PendingPayment> getPendingPaymentList() {
         ArrayList<PendingPayment> paymentList = new ArrayList<>();
-        
+
         var connection = getConnection();
         try {
             var callableStatement = connection.prepareCall("{CALL getPendingPayment()}");
@@ -305,34 +427,32 @@ public class DBUtil {
 
 //                , int , String , double 
 //                        
-
                 int test_report_id = resultSet.getInt("test_repo_id");
                 int a_id = resultSet.getInt("appointment_id");
                 String t_name = resultSet.getString("t_name");
                 double charges = resultSet.getDouble("charges");
-                
 
-                var payment = new PendingPayment(test_report_id,  a_id,  t_name,  charges);
+                var payment = new PendingPayment(test_report_id, a_id, t_name, charges);
                 paymentList.add(payment);
             }
 
         } catch (Exception e) {
             System.out.println("update User error : " + e);
         }
-                
+
         return paymentList;
     }
-    
-    public static void updateTestReportDetails(int tr_id,String t_time,String r_data,int t_id) {
-        
+
+    public static void updateTestReportDetails(int tr_id, String t_time, String r_data, int t_id) {
+
         var connection = getConnection();
         try {
             var callableStatement = connection.prepareCall("{CALL updateTestReportDetails(?,?,?,?)}");
 
             callableStatement.setInt(1, tr_id);
-            callableStatement.setString(2,t_time);
-            callableStatement.setString(3,r_data);
-            callableStatement.setInt(4,t_id);
+            callableStatement.setString(2, t_time);
+            callableStatement.setString(3, r_data);
+            callableStatement.setInt(4, t_id);
 
             callableStatement.executeQuery();
 
@@ -341,7 +461,7 @@ public class DBUtil {
         }
 
     }
-    
+
     public static List<PendingAppointment> getPendingAppointment() {
         ArrayList<PendingAppointment> appointmentList = new ArrayList<>();
 
@@ -360,7 +480,7 @@ public class DBUtil {
                 String p_name = resultSet.getString("p_name");
                 String t_name = resultSet.getString("t_name");
 
-                var appointment = new PendingAppointment(test_repo_id,appointment_id,patient_id,p_name,t_name);
+                var appointment = new PendingAppointment(test_repo_id, appointment_id, patient_id, p_name, t_name);
                 appointmentList.add(appointment);
             }
 
@@ -436,18 +556,19 @@ public class DBUtil {
 
     }
 
-    public static void insertAppointments(int a_id, String a_date, String a_time, String register_date, String a_status, int patient_id) {
+    public static void insertAppointments(int a_id, String a_date, String a_time, String register_date, String a_status, int patient_id, String ref_by) {
 
         var connection = getConnection();
         try {
-            var callableStatement = connection.prepareCall("{CALL insert_appointment(?,?,?,?,?,?)}");
+            var callableStatement = connection.prepareCall("{CALL insert_appointment(?,?,?,?,?,?,?)}");
 
             callableStatement.setInt(1, a_id);
             callableStatement.setString(2, a_date);
             callableStatement.setString(3, a_time);
             callableStatement.setString(4, register_date);
-            callableStatement.setString(5, a_status);
-            callableStatement.setInt(6, patient_id);
+            callableStatement.setString(5, ref_by);            
+            callableStatement.setString(6, a_status);
+            callableStatement.setInt(7, patient_id);
 
             callableStatement.executeQuery();
 
@@ -681,9 +802,9 @@ public class DBUtil {
     }
 
     public static void insertUserDetails(int u_id, String u_first_name, String u_last_name, String u_address, String u_gender, String u_email, String u_phone, String u_password, String u_privileges, String u_registered_date) {
-        
+
         String encryptedPass = computeSHA224(u_password);
-        
+
         var connection = getConnection();
         try {
             var callableStatement = connection.prepareCall("{CALL insert_user(?,?,?,?,?,?,?,?,?,?)}");
@@ -707,10 +828,10 @@ public class DBUtil {
     }
 
     public static void insertCustomerDetails(int maxId, String p_name, String p_gender, String p_address, String p_birthday, String p_email, String p_phone, String p_password, String p_privileges, String p_register_date) {
-        
+
         //Encrypt the password
         String encryptPass = computeSHA224(p_password);
-        
+
         var connection = getConnection();
         try {
             var callableStatement = connection.prepareCall("{CALL insert_patient(?,?,?,?,?,?,?,?,?,?)}");
@@ -862,7 +983,7 @@ public class DBUtil {
 
     public static LoginModel getLoginDetails(String lusername, String lpassword) {
         LoginModel user = null;
-        
+
         String encryptedPass = computeSHA224(lpassword);
 
         var connection = getConnection();
@@ -892,44 +1013,43 @@ public class DBUtil {
 
     }
 
-    public static List<PatientTesteReportModel> getTestReportList(int pid) {
-
-        ArrayList<PatientTesteReportModel> reportList = new ArrayList<>();
-
-        var connection = getConnection();
-        try {
-            var callableStatement = connection.prepareCall("{CALL getPatientReportData(?)}");
-
-            callableStatement.setInt(1, pid);
-
-            var resultSet = callableStatement.executeQuery();
-
-            while (resultSet.next()) {
-
-                int report_id = resultSet.getInt("report_id");
-                String test_time = resultSet.getString("test_time");
-                String report_data = resultSet.getString("report_data");
-                String report_status = resultSet.getString("report_status");
-                String t_isCancelled = resultSet.getString("t_isCancelled");
-                int a_id = resultSet.getInt("a_id");
-                String a_date = resultSet.getString("a_date");
-                String test_name = resultSet.getString("test_name");
-                double charges = resultSet.getDouble("charges");
-                String ref_level = resultSet.getString("ref_level");
-
-                var test_reports = new PatientTesteReportModel(report_id, test_time, report_data, report_status, t_isCancelled, a_id, a_date, test_name, charges, ref_level);
-
-                reportList.add(test_reports);
-
-            }
-
-        } catch (Exception e) {
-            System.out.println("Connection Error!");
-        }
-
-        return reportList;
-    }
-
+//    public static List<PatientTesteReportModel> getTestReportList(int pid) {
+//
+//        ArrayList<PatientTesteReportModel> reportList = new ArrayList<>();
+//
+//        var connection = getConnection();
+//        try {
+//            var callableStatement = connection.prepareCall("{CALL getPatientReportData(?)}");
+//
+//            callableStatement.setInt(1, pid);
+//
+//            var resultSet = callableStatement.executeQuery();
+//
+//            while (resultSet.next()) {
+//
+//                int report_id = resultSet.getInt("report_id");
+//                String test_time = resultSet.getString("test_time");
+//                String report_data = resultSet.getString("report_data");
+//                String report_status = resultSet.getString("report_status");
+//                String t_isCancelled = resultSet.getString("t_isCancelled");
+//                int a_id = resultSet.getInt("a_id");
+//                String a_date = resultSet.getString("a_date");
+//                String test_name = resultSet.getString("test_name");
+//                double charges = resultSet.getDouble("charges");
+//                String ref_level = resultSet.getString("ref_level");
+//
+//                var test_reports = new PatientTesteReportModel(report_id, test_time, report_data, report_status, t_isCancelled, a_id, a_date, test_name, charges, ref_level);
+//
+//                reportList.add(test_reports);
+//
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println("Connection Error!");
+//        }
+//
+//        return reportList;
+//    }
 //  getMax id methods
     public static int getCustomerMax() {
         int max = 0;
@@ -1023,7 +1143,7 @@ public class DBUtil {
 
         return max;
     }
-    
+
     public static int getPaymentMax() {
         int max = 0;
         try (var connection = getConnection()) {
@@ -1041,15 +1161,7 @@ public class DBUtil {
 
         return max;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
 //  Sha224 Encryption Method
     public static String computeSHA224(String input) {
         try {
@@ -1071,6 +1183,5 @@ public class DBUtil {
             return null;
         }
     }
-
 
 }

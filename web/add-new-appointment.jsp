@@ -27,11 +27,11 @@
         <link href="bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="css/footer-alignment.css" rel="stylesheet" type="text/css"/>
-        
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Salsa&family=Yellowtail&display=swap" rel="stylesheet">
-        
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body>
@@ -82,108 +82,129 @@
             <!--Appointment Form-->
             <div class="container mt-3 mb-3">
                 <form action="Appointment-List" method="post" class="needs-validation">
-                <div class="mb-3 row">
-                    <label for="inputID" class="col-2 col-form-label">Appointment ID</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" id="inputID" value="${maxID + 1}" name="a_id" required readonly />
+                    <div class="mb-3 row">
+                        <label for="inputID" class="col-2 col-form-label">Appointment ID</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="inputID" value="${maxID + 1}" name="a_id" required readonly />
+                        </div>
                     </div>
-                </div>
 
-                <div class="mb-3 row">
-                    <div class="col-5">
-                        <div class="row">
-                            <label for="inputADate" class="col-4 col-form-label">Appointment Date</label>
-                            <div class="col-sm-8">
-                                <input type="date" class="form-control" id="inputADate" name="a_date" min="<%= formattedDate%>" required />
+                    <div class="mb-3 row">
+                        <div class="col-5">
+                            <div class="row">
+                                <label for="inputADate" class="col-4 col-form-label">Appointment Date</label>
+                                <div class="col-sm-8">
+                                    <input type="date" class="form-control" id="inputADate" name="a_date" min="<%= formattedDate%>" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <label for="inputATime" class="col-4 col-form-label">Appointment Time</label>
+                                <div class="col-sm-8">
+                                    <input type="time" class="form-control" id="inputATime" name="a_time" required />
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="row">
-                            <label for="inputATime" class="col-4 col-form-label">Appointment Time</label>
-                            <div class="col-sm-8">
-                                <input type="time" class="form-control" id="inputATime" name="a_time" required />
+
+                    <div class="mb-3 row">
+                        <div class="col-5">
+                            <div class="row">
+                                <label for="inputPID" class="col-4 col-form-label">Patient ID</label>
+                                <div class="col-sm-8">
+                                    <!--<input type="number" class="form-control" id="inputPID" min="1" name="p_id" required />--> 
+
+                                    <select class="form-select" id="inputPID" aria-label="Default select inputGender" name="p_id">
+                                        <option value="0" selected disabled>Choose the Patient</option>
+
+                                        <!--load the test list-->
+                                        <c:forEach var="item" items="${patientDetails}">
+                                            <option value="${item.p_id}">${item.p_id}</option>                                                                  
+                                        </c:forEach>
+
+                                    </select>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <label for="inputTodayDate" class="col-4 col-form-label">Registration Date</label>
+                                <div class="col-sm-8">
+                                    <input type="date" class="form-control" id="inputTodayDate" name="r_date" value="<%= formattedDate%>" required readonly/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                                
+                                
+                                
+                                
+                                
+                    <div class="mb-3 row">
+                        <div class="col-5">
+                            <div class="row">
+                                <label for="inputGender" class="col-3 col-form-label">Test List</label>
+                                <div class="col-sm-8">
+                                    <select class="form-select" id="testSelector" aria-label="Default select inputGender" name="testID">
+                                        <!--<option value="0" selected disabled>Choose the Test</option>-->
 
-                <div class="mb-3 row">
-                    <div class="col-5">
-                        <div class="row">
-                            <label for="inputPID" class="col-4 col-form-label">Patient ID</label>
-                            <div class="col-sm-8">
-                                <!--<input type="number" class="form-control" id="inputPID" min="1" name="p_id" required />--> 
+                                        <!--load the test list-->
+                                        <c:forEach var="item" items="${testPacks}">
+                                            <c:if test="${item.is_deleted eq 'F'}">
+                                                <option value="${item.t_id}">${item.t_name}</option>
+                                            </c:if>                                    
+                                        </c:forEach>
 
-                                <select class="form-select" id="inputPID" aria-label="Default select inputGender" name="p_id">
-                                    <option value="0" selected disabled>Choose the Patient</option>
-
-                                    <!--load the test list-->
-                                    <c:forEach var="item" items="${patientDetails}">
-                                        <option value="${item.p_id}">${item.p_id}</option>                                                                  
-                                    </c:forEach>
-
-                                </select>
-
-
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="row">
-                            <label for="inputTodayDate" class="col-4 col-form-label">Registration Date</label>
-                            <div class="col-sm-8">
-                                <input type="date" class="form-control" id="inputTodayDate" name="r_date" value="<%= formattedDate%>" required readonly/>
+                        <div class="col-6">
+                            <div class="row">
+                                <label for="inputRefBy" class="col-4 col-form-label">Referred By</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="inputRefBy" name="refBy" required />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div>            
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
 
-                <div class="mb-3 row">
-                    <div class="col-6 row">
-                        <label for="inputGender" class="col-3 col-form-label">Test List</label>
-                        <div class="col-sm-8">
-                            <select class="form-select" id="testSelector" aria-label="Default select inputGender" name="testID">
-                                <!--<option value="0" selected disabled>Choose the Test</option>-->
+                    <!--                <div class="row">
+                                        <table class="table table-striped" id="testTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Test ID</th>
+                                                    <th>Test Name</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>-->
 
-                                <!--load the test list-->
-                                <c:forEach var="item" items="${testPacks}">
-                                    <c:if test="${item.is_deleted eq 'F'}">
-                                        <option value="${item.t_id}">${item.t_name}</option>
-                                    </c:if>                                    
-                                </c:forEach>
+                    <input type="text" class="" value="PATIENT" name="p_privileges" hidden />
+                    <input type="text" class="" value="ADD" name="command" hidden />
 
-                            </select>
+
+                    <div class="row justify-content-end">
+                        <div class="col-3">
+                            <button type="submit" id="btnsubmit" class="btn btn-success w-100">Add Appointment</button>
                         </div>
-                        <!--                        <div class="col-1">
-                                                    <button class="btn btn-primary" id="btnTest">+</button>
-                                                </div>-->
+                        <div class="col-1"></div>
                     </div>
-                </div>
-
-                <!--                <div class="row">
-                                    <table class="table table-striped" id="testTable">
-                                        <thead>
-                                            <tr>
-                                                <th>Test ID</th>
-                                                <th>Test Name</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>-->
-
-                <input type="text" class="" value="PATIENT" name="p_privileges" hidden />
-                <input type="text" class="" value="ADD" name="command" hidden />
-
-
-                <div class="row justify-content-end">
-                    <div class="col-3">
-                        <button type="submit" id="btnsubmit" class="btn btn-success w-100">Add Appointment</button>
-                    </div>
-                    <div class="col-1"></div>
-                </div>
                 </form>
             </div>
 
@@ -200,10 +221,10 @@
                 &copy; 2024 ABC Laboratory | All rights reserved.
             </div>
             <div class="social-media mt-3">                
-                    <i class="fa-brands fa-square-facebook fa-lg me-2"></i>
-                    <i class="fa-brands fa-instagram fa-lg me-2"></i>
-                    <i class="fa-brands fa-square-twitter fa-lg me-2"></i>
-                    <i class="fa-brands fa-square-whatsapp fa-lg "></i>
+                <i class="fa-brands fa-square-facebook fa-lg me-2"></i>
+                <i class="fa-brands fa-instagram fa-lg me-2"></i>
+                <i class="fa-brands fa-square-twitter fa-lg me-2"></i>
+                <i class="fa-brands fa-square-whatsapp fa-lg "></i>
             </div>
         </div>
 

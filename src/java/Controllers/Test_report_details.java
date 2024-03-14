@@ -15,24 +15,23 @@ public class Test_report_details extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+
         HttpSession session = request.getSession();
         String privi = (String) session.getAttribute("privilages");
-        
+
         if (privi == null) {
-            
+
             response.sendRedirect(request.getContextPath() + "/Log-Out");
-            
+
         } else {
             String command = request.getParameter("command");
-            
+
             switch (command) {
                 case "LOAD":
                     loadTestReportDetails(request, response);
                     break;
             }
-        }       
+        }
 
     }
 
@@ -41,26 +40,23 @@ public class Test_report_details extends HttpServlet {
             throws ServletException, IOException {
 
     }
-    
-    
-    
+
     protected void loadTestReportDetails(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
 //        dont asign the id parameter for the url id
-
-
 //        int pati_id = Integer.parseInt(request.getParameter("id"));
 //        var reportDetails = DBUtil.getTestReportList(pati_id);
+        HttpSession session = request.getSession();
+        int lo_id = (int) session.getAttribute("logingID");
         
-        
-//        System.out.println(reportDetails);
-        
-//        request.setAttribute("patientReportDetais", reportDetails);
+        var reportDetails = DBUtil.getTestReportList(lo_id);
+
+//        System.out.println(privi);
+        request.setAttribute("pr_data", reportDetails);
         RequestDispatcher dispatcher = request.getRequestDispatcher("patient_home.jsp");
         dispatcher.forward(request, response);
-        
+
     }
 
-    
 }

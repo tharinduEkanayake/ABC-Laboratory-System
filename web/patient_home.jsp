@@ -50,43 +50,30 @@
                 <table id="testReports" class="display" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Test ID </th>
+                            <th>Appointment ID </th>
                             <th>Test Name</th>
                             <th>Test Date</th>
-                            <th>Test Time</th>
                             <th>Test Report Data</th>
-                            <th>Report Status</th>
-                            <th>Reference Level</th>
 
-                            <th>Charges</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        <c:forEach var="items" items="${patientReportDetais}" >
-                            <c:if test="${items.t_isCancelled eq 'F'}">
+                        <c:forEach var="items" items="${pr_data}" >
+                            
                                 <tr>
 
-                                    <td>${items.report_id}</td>
-                                    <td>${items.test_name}</td>
-                                    <td>${items.a_date}</td>
-                                    <td>${items.test_time}</td>
-                                    <td>${items.report_data}</td>
+                                    <td>${items.a_id}</td>
+                                    <td>${items.t_name}</td>
+                                    <td>${items.t_date}</td>
+                                    <td>${items.r_data}</td>
 
-                                    <c:if test="${items.report_status eq 'COM'}">
-                                        <td>Complete</td>
-                                    </c:if>
 
-                                    <c:if test="${items.report_status ne 'COM'}">
-                                        <td>${items.report_status}</td>
-                                    </c:if>
-
-                                    <td>${items.ref_level}</td>
-
-                                    <td>${items.charges}</td>
+                                    <td><a href="PDFGenarator?id=${items.tr_id}"><button>Get report</button></a></td>
 
                                 </tr>
-                            </c:if>
+                            
                         </c:forEach>
                     </tbody>
                 </table>
@@ -114,8 +101,13 @@
         <script src="jQuery/jquery-3.7.1.min.js" type="text/javascript"></script>
         <script src="data_tables/datatables.min.js" type="text/javascript"></script>
 
+        
         <script>
-            new DataTable('#testReports');
+            $(document).ready(function(){
+                $('#testReports').dataTable({
+                    "order": []
+                });
+            })
         </script>
 
     </body>

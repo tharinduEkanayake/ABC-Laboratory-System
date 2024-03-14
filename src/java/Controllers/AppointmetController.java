@@ -99,8 +99,9 @@ public class AppointmetController extends HttpServlet {
         int p_id = Integer.parseInt(request.getParameter("p_id"));
         String r_date = request.getParameter("r_date");
         String testID = request.getParameter("testID");
+        String ref_by = request.getParameter("refBy");
 
-        DBUtil.insertAppointments(a_id, a_date, a_time, r_date, "PENDING", p_id);
+        DBUtil.insertAppointments(a_id, a_date, a_time, r_date, "PENDING", p_id, ref_by);
         DBUtil.insertTestReportByFrontdesk(a_id, Integer.parseInt(testID));
 
         loadAppointmentDetails(request,response);

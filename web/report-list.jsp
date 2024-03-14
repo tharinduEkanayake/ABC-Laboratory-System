@@ -17,7 +17,7 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="css/footer-alignment.css" rel="stylesheet" type="text/css"/>
         <link href="css/report.css" rel="stylesheet" type="text/css"/>
-        
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Salsa&family=Yellowtail&display=swap" rel="stylesheet">
@@ -137,6 +137,8 @@
 
 
 
+
+
             <div class="container mt-4">
                 <div class="row g-3" style="">
                     <div class="col-6">
@@ -146,7 +148,7 @@
                         </div>
                     </div>
                     <div class="col-6">
-                        <h5 class="text-center">Daily Test</h5>
+                        <h5 class="text-center">Today Test Sumamry</h5>
                         <div class="text-center" style="position: relative; text-align: center; margin: 0 auto; height:20rem; ">
                             <canvas style="margin: 0 auto;" id="chartTest"></canvas>
                         </div>
@@ -157,6 +159,42 @@
 
         </div>
 
+        <table id="totalIncomeTable" hidden>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="item" items="${dailyTotal}">
+                    <tr>
+                        <td>${item.date}</td>
+                        <td>${item.total}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+
+        <table id="todayTestList" hidden>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="item" items="${todayTest}">
+                    <tr>
+                        <td>${item.testname}</td>
+                        <td>${item.noOfTests}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+
+
+
 
 
         <!--Footer css taglist-->
@@ -165,54 +203,85 @@
                 &copy; 2024 ABC Laboratory | All rights reserved.
             </div>
             <div class="social-media mt-3">                
-                    <i class="fa-brands fa-square-facebook fa-lg me-2"></i>
-                    <i class="fa-brands fa-instagram fa-lg me-2"></i>
-                    <i class="fa-brands fa-square-twitter fa-lg me-2"></i>
-                    <i class="fa-brands fa-square-whatsapp fa-lg "></i>
+                <i class="fa-brands fa-square-facebook fa-lg me-2"></i>
+                <i class="fa-brands fa-instagram fa-lg me-2"></i>
+                <i class="fa-brands fa-square-twitter fa-lg me-2"></i>
+                <i class="fa-brands fa-square-whatsapp fa-lg "></i>
             </div>
         </div>
 
         <script src="bootstrap-5.0.2-dist/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+        <script src="jQuery/jquery-3.7.1.min.js" type="text/javascript"></script>
 
         <script>
-            const ctx = document.getElementById('chartIncome');
-            const c_test = document.getElementById('chartTest');
+            $(document).ready(function () {
 
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                    datasets: [{
-                            label: 'Income Amount',
-                            data: [12, 19, 3, 5, 2, 3],
-                            borderWidth: 3
-                        }]
-                },
-                options: {
-                    tension: .5,
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                const ctx = document.getElementById('chartIncome');
+                const c_test = document.getElementById('chartTest');
+
+                var labelList = [];
+                var totalList = [];
+                $('#totalIncomeTable tbody  tr').each(function () {
+                    var label = $(this).find("td:eq(0)").text();
+                    var total = $(this).find("td:eq(1)").text();
+
+                    totalList.push(total);
+                    labelList.push(label);
+                });
+               
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labelList,
+                        datasets: [{
+                                label: 'Income Amount',
+                                data: totalList,
+                                borderWidth: 3
+                            }]
+                    },
+                    options: {
+                        tension: .5,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
+                });
+                
+                
+                
+                var testName = [];
+                var noOfTest = [];
+                $('#todayTestList tbody  tr').each(function () {
+                    var label = $(this).find("td:eq(0)").text();
+                    var total = $(this).find("td:eq(1)").text();
 
-            new Chart(c_test, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                    datasets: [{
-                            label: '# of Votes',
-                            data: [12, 19, 3, 5, 2, 3],
-                            borderWidth: 0
-                        }]
-                },
-                options: {
-                   
-                }
-            });
+                    noOfTest.push(total);
+                    testName.push(label);
+                });
+                               
+
+                new Chart(c_test, {
+                    type: 'doughnut',
+                    data: {
+                        labels: testName,
+                        datasets: [{
+                                label: '# of Votes',
+                                data: noOfTest,
+                                borderWidth: 0
+                            }]
+                    },
+                    options: {
+
+                    }
+                });
+
+
+            })
+
         </script>
 
 
