@@ -81,7 +81,7 @@
 
             <!--Appointment Form-->
             <div class="container mt-3 mb-3">
-                <form action="Appointment-List" method="post" class="needs-validation">
+                <form action="Appointment-List" method="post" class="needs-validation" novalidate>
                     <div class="mb-3 row">
                         <label for="inputID" class="col-2 col-form-label">Appointment ID</label>
                         <div class="col-sm-3">
@@ -95,6 +95,8 @@
                                 <label for="inputADate" class="col-4 col-form-label">Appointment Date</label>
                                 <div class="col-sm-8">
                                     <input type="date" class="form-control" id="inputADate" name="a_date" min="<%= formattedDate%>" required />
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please Enter Valid Date</div>
                                 </div>
                             </div>
                         </div>
@@ -103,6 +105,8 @@
                                 <label for="inputATime" class="col-4 col-form-label">Appointment Time</label>
                                 <div class="col-sm-8">
                                     <input type="time" class="form-control" id="inputATime" name="a_time" required />
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please Select Time</div>
                                 </div>
                             </div>
                         </div>
@@ -115,8 +119,8 @@
                                 <div class="col-sm-8">
                                     <!--<input type="number" class="form-control" id="inputPID" min="1" name="p_id" required />--> 
 
-                                    <select class="form-select" id="inputPID" aria-label="Default select inputGender" name="p_id">
-                                        <option value="0" selected disabled>Choose the Patient</option>
+                                    <select class="form-select" id="inputPID" aria-label="Default select inputGender" name="p_id" required>
+                                        <option value="" selected disabled>Choose the Patient</option>
 
                                         <!--load the test list-->
                                         <c:forEach var="item" items="${patientDetails}">
@@ -124,6 +128,8 @@
                                         </c:forEach>
 
                                     </select>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please a Patient</div>
 
 
                                 </div>
@@ -138,11 +144,11 @@
                             </div>
                         </div>
                     </div>
-                                
-                                
-                                
-                                
-                                
+
+
+
+
+
                     <div class="mb-3 row">
                         <div class="col-5">
                             <div class="row">
@@ -167,20 +173,22 @@
                                 <label for="inputRefBy" class="col-4 col-form-label">Referred By</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="inputRefBy" name="refBy" required />
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please Enter Referred Person</div>
                                 </div>
                             </div>
                         </div>
                     </div>            
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
+
+
+
+
+
+
+
+
+
+
 
                     <!--                <div class="row">
                                         <table class="table table-striped" id="testTable">
@@ -233,6 +241,27 @@
         <script src="jQuery/jquery-3.7.1.min.js" type="text/javascript"></script>
 
         <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function () {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.prototype.slice.call(forms)
+                        .forEach(function (form) {
+                            form.addEventListener('submit', function (event) {
+                                if (!form.checkValidity()) {
+                                    event.preventDefault()
+                                    event.stopPropagation()
+                                }
+
+                                form.classList.add('was-validated')
+                            }, false)
+                        })
+            })()
+
 //            $(document).ready(function () {
 //                //Add the test package to table
 //                let addedTest = [];

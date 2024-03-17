@@ -153,7 +153,7 @@ public class PDFGenarator extends HttpServlet {
             document.add(new Chunk(new LineSeparator()));
             document.add(new Paragraph("Test Name                                                         " + "Test Result"));
             document.add(new Chunk(new LineSeparator()));
-            document.add(new Paragraph(t_name + "                                                                    " + t_result));
+            document.add(new Paragraph(t_name + "                                                           " + t_result));
 
             document.add(new Paragraph(" "));
             document.add(new Paragraph(" "));

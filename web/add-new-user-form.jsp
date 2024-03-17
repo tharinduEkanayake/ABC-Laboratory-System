@@ -27,11 +27,11 @@
         <link href="bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="css/footer-alignment.css" rel="stylesheet" type="text/css"/>
-        
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Salsa&family=Yellowtail&display=swap" rel="stylesheet">
-        
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body>
@@ -81,7 +81,7 @@
 
 
             <div class="container">
-                <form action="User-Details" method="post" class="needs-validation">
+                <form action="User-Details" method="post" class="needs-validation" novalidate>
                     <div class="mb-3 row">
                         <label for="inputID" class="col-1 col-form-label">User ID</label>
                         <div class="col-sm-3">
@@ -95,6 +95,8 @@
                                 <label for="inputFirstName" class="col-4 col-form-label">First Name</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="inputFirstName" name="u_first_name" required />
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please Enter First Name</div>
                                 </div>
                             </div>
                         </div>
@@ -103,6 +105,8 @@
                                 <label for="inputLastName" class="col-3 col-form-label">Last Name</label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="inputLastName" name="u_last_name" required />
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please Enter Last Name</div>
                                 </div>
                             </div>
                         </div>
@@ -112,6 +116,8 @@
                         <label for="inputAddress" class="col-2 col-form-label">Address</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="inputAddress" name="u_address" required />
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Please Enter Valid Address</div>
                         </div>
                     </div>
 
@@ -131,7 +137,9 @@
                             <div class="row">
                                 <label for="inputPhoneNo" class="col-3 col-form-label">Phone Number</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputPhoneNo" name="u_phone" maxlength="12" value="+94" required />
+                                    <input type="text" class="form-control" id="inputPhoneNo" name="u_phone" maxlength="12" minlength="12" placeholder="+94" required />
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please Enter Phone Number</div>
                                 </div>
                             </div>
                         </div>
@@ -141,6 +149,8 @@
                         <label for="inputEmail" class="col-2 col-form-label">Email</label>
                         <div class="col-sm-6">
                             <input type="email" class="form-control" id="inputEmail" name="u_email" required />
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Please Enter Valid Email</div>
                         </div>
                     </div>
 
@@ -202,13 +212,35 @@
                 &copy; 2024 ABC Laboratory | All rights reserved.
             </div>
             <div class="social-media mt-3">                
-                    <i class="fa-brands fa-square-facebook fa-lg me-2"></i>
-                    <i class="fa-brands fa-instagram fa-lg me-2"></i>
-                    <i class="fa-brands fa-square-twitter fa-lg me-2"></i>
-                    <i class="fa-brands fa-square-whatsapp fa-lg "></i>
+                <i class="fa-brands fa-square-facebook fa-lg me-2"></i>
+                <i class="fa-brands fa-instagram fa-lg me-2"></i>
+                <i class="fa-brands fa-square-twitter fa-lg me-2"></i>
+                <i class="fa-brands fa-square-whatsapp fa-lg "></i>
             </div>
         </div>
 
         <script src="bootstrap-5.0.2-dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function () {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.prototype.slice.call(forms)
+                        .forEach(function (form) {
+                            form.addEventListener('submit', function (event) {
+                                if (!form.checkValidity()) {
+                                    event.preventDefault()
+                                    event.stopPropagation()
+                                }
+
+                                form.classList.add('was-validated')
+                            }, false)
+                        })
+            })()
+        </script>
     </body>
 </html>

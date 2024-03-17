@@ -87,11 +87,12 @@
 
 
             <c:if test="${LoginResponse == 'No_Login'}">
-                <div class="alert alert-danger" role="alert" id="loginResponseAlert">
-                    Your Username or Password is wrong check again...!! 
-                </div>
+
 
             </c:if>
+            <div class="alert alert-danger" role="alert" id="loginResponseAlert">
+                Your Username or Password is wrong check again...!! 
+            </div>
 
 
             <form class="login-form" action="LoginController" method="post">
@@ -103,17 +104,25 @@
 
 
         <script src="bootstrap-5.0.2-dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="jQuery/jquery-3.7.1.js" type="text/javascript"></script>
 
         <script>
-
-            document.addEventListener("DOMContentLoaded", function (event) {
-
+            $(document).ready(function () {
                 var alert = document.getElementById('loginResponseAlert');
+                var resp = '${LoginResponse}';
 
-                setTimeout(function () {
+                console.log();
+
+                if (resp == 'nothing') {
+                    alert.style.display = 'block';
+
+                    setTimeout(function () {
+                        alert.style.display = 'none';
+                    }, 5000);
+                } else {
                     alert.style.display = 'none';
-                }, 5000);
-            });
+                }
+            })
         </script>
     </body>
 </html>

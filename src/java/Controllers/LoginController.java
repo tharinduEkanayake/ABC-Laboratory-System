@@ -71,7 +71,7 @@ public class LoginController extends HttpServlet {
 
         } else {
 
-            request.setAttribute("LoginResponse", "No_Login");
+            request.setAttribute("LoginResponse", "nothing");
             RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
             dispatcher.forward(request, response);
 //            System.out.println("NO Login");

@@ -159,40 +159,6 @@
 
         </div>
 
-        <table id="totalIncomeTable" hidden>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="item" items="${dailyTotal}">
-                    <tr>
-                        <td>${item.date}</td>
-                        <td>${item.total}</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-
-        <table id="todayTestList" hidden>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="item" items="${todayTest}">
-                    <tr>
-                        <td>${item.testname}</td>
-                        <td>${item.noOfTests}</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-
 
 
 
@@ -219,25 +185,15 @@
 
                 const ctx = document.getElementById('chartIncome');
                 const c_test = document.getElementById('chartTest');
-
-                var labelList = [];
-                var totalList = [];
-                $('#totalIncomeTable tbody  tr').each(function () {
-                    var label = $(this).find("td:eq(0)").text();
-                    var total = $(this).find("td:eq(1)").text();
-
-                    totalList.push(total);
-                    labelList.push(label);
-                });
                
 
                 new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: labelList,
+                        labels: ${dateList},
                         datasets: [{
                                 label: 'Income Amount',
-                                data: totalList,
+                                data: ${amountList},
                                 borderWidth: 3
                             }]
                     },
@@ -252,25 +208,13 @@
                 });
                 
                 
-                
-                var testName = [];
-                var noOfTest = [];
-                $('#todayTestList tbody  tr').each(function () {
-                    var label = $(this).find("td:eq(0)").text();
-                    var total = $(this).find("td:eq(1)").text();
-
-                    noOfTest.push(total);
-                    testName.push(label);
-                });
-                               
-
                 new Chart(c_test, {
                     type: 'doughnut',
                     data: {
-                        labels: testName,
+                        labels: ${testName},
                         datasets: [{
                                 label: '# of Votes',
-                                data: noOfTest,
+                                data: ${noOfTest},
                                 borderWidth: 0
                             }]
                     },

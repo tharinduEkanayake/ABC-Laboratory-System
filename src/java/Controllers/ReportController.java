@@ -2,6 +2,8 @@ package Controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,11 +45,33 @@ public class ReportController extends HttpServlet {
         var totalCustomers = DBUtil.getTotalCustomers();
         var totalTest = DBUtil.getTotalTest();
         
+        //daily income chart data
         var dailyTotal = DBUtil.getDilyIncome();
-        var todatCompleTets = DBUtil.getTodayCompleteTest();
+        List<String> p_date = new ArrayList<>();
+        List<Double> amount = new ArrayList<>();
         
-        request.setAttribute("dailyTotal", dailyTotal);
-        request.setAttribute("todayTest", todatCompleTets);
+        for(var item : dailyTotal){
+            p_date.add("'" + item.getDate() +"'");
+            amount.add(item.getTotal());
+        }
+        
+        request.setAttribute("dateList", p_date);
+        request.setAttribute("amountList", amount);
+        
+        
+        //chart total test summary
+        var todatCompleTets = DBUtil.getTodayCompleteTest();
+        List<Integer> noOfTest = new ArrayList<>();
+        List<String> testName = new ArrayList<>();
+        
+        for(var item : todatCompleTets){
+            noOfTest.add(item.getNoOfTests());
+            testName.add("'" + item.getTestname() + "'");
+        }
+                
+        request.setAttribute("noOfTest", noOfTest);
+        request.setAttribute("testName", testName);
+
         
         request.setAttribute("totalTest", totalTest);
         request.setAttribute("totalCustomers", totalCustomers);
